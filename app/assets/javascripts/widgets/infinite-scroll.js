@@ -1,9 +1,9 @@
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3-or-Later
 
 /*   Copyright (c) 2010-2011, Diaspora Inc.  This file is
-*   licensed under the Affero General Public License version 3 or later.  See
-*   the COPYRIGHT file.
-*/
+ *   licensed under the Affero General Public License version 3 or later.  See
+ *   the COPYRIGHT file.
+ */
 
 (function() {
   var InfiniteScroll = function() {
@@ -13,7 +13,7 @@
       debug: false,
       donetext: Diaspora.I18n.t("infinite_scroll.no_more"),
       loadingText: "",
-      loadingImg: ImagePaths.get("ajax-loader.gif"),
+      loadingImg: ImagePaths.get("ajax-loader2.gif"),
       navSelector: "#pagination",
       nextSelector: ".paginate",
       itemSelector: ".stream_element",
@@ -59,4 +59,3 @@
   Diaspora.Widgets.InfiniteScroll = InfiniteScroll;
 })();
 // @license-end
-

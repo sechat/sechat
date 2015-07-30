@@ -8,11 +8,10 @@
 //= require backbone
 //= require jquery.hotkeys
 //= require jquery.remotipart
-//= require jquery.autoresize
+//= require autosize
 //= require jquery.charcount
 //= require jquery-placeholder
 //= require rails-timeago
-//= require jquery.facebox
 //= require browser_detection
 //= require jquery.events.input
 //= require jakobmattsson-jquery-elastic
@@ -42,10 +41,7 @@
 //= require_tree ./pages
 //= require_tree ./widgets
 //= require view
-//= require aspects-dropdown
 //= require mentions
-//= require bootstrap-tooltip
-//= require bootstrap-popover
-//= require bootstrap-dropdown
-//= require bootstrap-modal
+//= require bootstrap
 //= require osmlocator
+//= require bootstrap-switch

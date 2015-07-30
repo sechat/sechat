@@ -32,7 +32,7 @@ describe("app.views.AspectCreate", function() {
         expect(this.view.$("#newAspectModal form").length).toBe(1);
         expect(this.view.$("#newAspectModal input#aspect_name").length).toBe(1);
         expect(this.view.$("#newAspectModal input#aspect_contacts_visible").length).toBe(1);
-        expect(this.view.$("#newAspectModal .btn.creation").length).toBe(1);
+        expect(this.view.$("#newAspectModal .btn-primary").length).toBe(1);
       });
 
       it("shouldn't show a hidden person id input", function() {
@@ -40,6 +40,24 @@ describe("app.views.AspectCreate", function() {
       });
     });
 
+    describe("#inputKeypress", function() {
+      beforeEach(function() {
+        this.view.render();
+        spyOn(this.view, "createAspect");
+      });
+
+      it("should call createAspect if the enter key was pressed", function() {
+        var e = $.Event("keypress", { which: 13 });
+        this.view.inputKeypress(e);
+        expect(this.view.createAspect).toHaveBeenCalled();
+      });
+
+      it("shouldn't call createAspect if another key was pressed", function() {
+        var e = $.Event("keypress", { which: 42 });
+        this.view.inputKeypress(e);
+        expect(this.view.createAspect).not.toHaveBeenCalled();
+      });
+    });
 
     describe("#createAspect", function() {
       beforeEach(function() {
@@ -86,7 +104,8 @@ describe("app.views.AspectCreate", function() {
         });
 
         it("should hide the modal", function() {
-          this.view.$(".modal").modal("show");
+          this.view.$(".modal").removeClass("fade");
+          this.view.$(".modal").modal("toggle");
           expect(this.view.$(".modal")).toHaveClass("in");
           this.view.createAspect();
           jasmine.Ajax.requests.mostRecent().respondWith(this.response);
@@ -108,6 +127,7 @@ describe("app.views.AspectCreate", function() {
         });
 
         it("should hide the modal", function() {
+          this.view.$(".modal").removeClass("fade");
           this.view.$(".modal").modal("show");
           expect(this.view.$(".modal")).toHaveClass("in");
           this.view.createAspect();
@@ -141,7 +161,7 @@ describe("app.views.AspectCreate", function() {
         expect(this.view.$("#newAspectModal form").length).toBe(1);
         expect(this.view.$("#newAspectModal input#aspect_name").length).toBe(1);
         expect(this.view.$("#newAspectModal input#aspect_contacts_visible").length).toBe(1);
-        expect(this.view.$("#newAspectModal .btn.creation").length).toBe(1);
+        expect(this.view.$("#newAspectModal .btn-primary").length).toBe(1);
       });
 
       it("should show a hidden person id input", function() {

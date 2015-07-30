@@ -98,14 +98,15 @@ en:
   admins:
     admin_bar:
       pages: "Pages"
+      dashboard: "Dashboard"
       user_search: "User search"
       weekly_user_stats: "Weekly user stats"
       pod_stats: "Pod stats"
       report: "Reports"
-      correlations: "Correlations"
       sidekiq_monitor: "Sidekiq monitor"
-    correlations:
-      correlations_count: "Correlations with sign-in count:"
+    dashboard:
+      pod_status: "Pod status"
+      fetching_diaspora_version: "Determining latest diaspora* version..."
     user_search:
       you_currently:
         zero: "You currently have no invites left %{link}"
@@ -114,6 +115,8 @@ en:
       view_profile: "View profile"
       add_invites: "Add invites"
       close_account: "Close account"
+      lock_account: "Lock account"
+      unlock_account: "Unlock account"
       are_you_sure: "Are you sure you want to close this account?"
       are_you_sure_lock_account: "Are you sure you want to lock this account?"
       are_you_sure_unlock_account: "Are you sure you want to unlock this account?"
@@ -344,10 +347,12 @@ en:
       replying: "Replying..."
       hide: "Hide and mute conversation"
       delete: "Delete conversation"
+      last_message: "Last message received %{timeago}"
     new:
       to: "To"
       subject: "Subject"
       subject_default: "No subject"
+      message: "Message"
       send: "Send"
       sending: "Sending..."
       abandon_changes: "Abandon changes?"
@@ -640,6 +645,7 @@ en:
       admin: "Admin"
       view_all: "View all"
       recent_notifications: "Recent notifications"
+      toggle_navigation: "Toggle navigation"
     application:
       powered_by: "Powered by diaspora*"
       whats_new: "What’s new?"
@@ -969,10 +975,17 @@ en:
       or_select_one_existing: "or select one from your already existing %{photos}"
     comment_email_subject: "%{name}’s photo"
 
+  polls:
+    votes:
+      zero: "%{count} votes so far"
+      one: "%{count} vote so far"
+      other: "%{count} votes so far"
+
   posts:
     presenter:
       title: "A post from %{name}"
     show:
+      location: "Posted from: %{location}"
       destroy: "Delete"
       permalink: "Permalink"
       not_found: "Sorry, we couldn’t find that post."
@@ -1005,8 +1018,14 @@ en:
 
   profiles:
     edit:
-      your_public_profile: "Your public profile"
-      your_private_profile: "Your private profile"
+      basic: "My basic profile"
+      extended: "My extended profile"
+      settings: "Profile settings"
+      extended_visibility_text: "Visibility of your extended profile:"
+      public: "Public"
+      limited: "Limited"
+      basic_hint: "Every item in your profile is optional. Your basic profile will always be publicly visible."
+      extended_hint: "Click the switch to set your extended profile data visibility. Public means it is visible to the internet, limited means only people who you share with will see this information."
       your_name: "Your name"
       first_name: "First name"
       last_name: "Last name"
@@ -1099,14 +1118,15 @@ en:
       twitter: "Twitter"
       wordpress: "WordPress"
     index:
+      title: "Manage connected services"
       connect: "Connect"
       disconnect: "Disconnect"
       logged_in_as: "Logged in as %{nickname}."
-      no_services_available: "There are no services on this pod available."
+      no_services_available: "There are no services available on this pod."
       not_logged_in: "Currently not logged in."
       really_disconnect: "Disconnect %{service}?"
       edit_services: "Edit services"
-      services_explanation: "Connecting to services gives you the ability to publish your posts to them as you write them in diaspora*."
+      services_explanation: "Connecting to third-party sharing services gives you the ability to publish your posts to them as you write them in diaspora*."
     create:
       success: "Authentication successful."
       failure: "Authentication failed."
@@ -1323,6 +1343,7 @@ en:
       current_password_expl: "the one you sign in with..."
       character_minimum_expl: "must be at least six characters"
       change_language: "Change language"
+      change_color_theme: "Change color theme"
       close_account_text: "Close account"
       stream_preferences: "Stream preferences"
       show_community_spotlight: "Show “community spotlight” in stream"
@@ -1401,6 +1422,8 @@ en:
       unconfirmed_email_not_changed: "Email change failed"
       follow_settings_changed: "Follow settings changed"
       follow_settings_not_changed: "Follow settings change failed."
+      color_theme_changed: "Color theme successfully changed."
+      color_theme_not_changed: "An error occurred while changing the color theme."
     public:
       does_not_exist: "User %{username} does not exist!"
     confirm_email:

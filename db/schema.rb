@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607143809) do
+ActiveRecord::Schema.define(version: 20150724152052) do
 
   create_table "account_deletions", force: :cascade do |t|
     t.string   "diaspora_handle", limit: 255
@@ -254,12 +254,13 @@ ActiveRecord::Schema.define(version: 20150607143809) do
   create_table "participations", force: :cascade do |t|
     t.string   "guid",                    limit: 255
     t.integer  "target_id",               limit: 4
-    t.string   "target_type",             limit: 60,    null: false
+    t.string   "target_type",             limit: 60,                null: false
     t.integer  "author_id",               limit: 4
     t.text     "author_signature",        limit: 65535
     t.text     "parent_author_signature", limit: 65535
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "count",                   limit: 4,     default: 1, null: false
   end
 
   add_index "participations", ["guid"], name: "index_participations_on_guid", length: {"guid"=>191}, using: :btree
@@ -374,7 +375,6 @@ ActiveRecord::Schema.define(version: 20150607143809) do
     t.integer  "reshares_count",        limit: 4,     default: 0
     t.datetime "interacted_at"
     t.string   "frame_name",            limit: 255
-    t.boolean  "favorite",                            default: false
     t.string   "facebook_id",           limit: 255
     t.string   "tweet_id",              limit: 255
     t.integer  "open_graph_cache_id",   limit: 4
@@ -408,6 +408,7 @@ ActiveRecord::Schema.define(version: 20150607143809) do
     t.string   "location",         limit: 255
     t.string   "full_name",        limit: 70
     t.boolean  "nsfw",                           default: false
+    t.boolean  "public_details",               default: false
   end
 
   add_index "profiles", ["full_name", "searchable"], name: "index_profiles_on_full_name_and_searchable", using: :btree
@@ -565,6 +566,7 @@ ActiveRecord::Schema.define(version: 20150607143809) do
     t.string   "exported_photos_file",               limit: 255
     t.datetime "exported_photos_at"
     t.boolean  "exporting_photos",                                 default: false
+    t.string   "color_theme",                        limit: 255
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

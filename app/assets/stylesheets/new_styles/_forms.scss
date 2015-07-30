@@ -27,13 +27,6 @@ input:-webkit-autofill{
 form.block-form {
   margin: 20px auto;
 
-  label {
-    color : $text-dark-grey;
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
   fieldset {
     margin-bottom: 1em;
     background-color: #fff;
@@ -78,26 +71,18 @@ form.block-form {
       }
     }
 
-    .entypo {
+    [class^="entypo-"], [class*="entypo-"] {
       position: absolute;
+      line-height: 20px;
       top: 10px;
       left: 10px;
       width: 20px;
       text-align: center;
       color: $text-grey;
       font-size: 20px;
-    }
-
-    .entypo:nth-of-type(2) {
-      top: 50px;
-    }
-
-    .entypo:nth-of-type(3) {
-      top: 90px;
-    }
-
-    .entypo:nth-of-type(4) {
-      top: 130px;
+      &:nth-of-type(2) { top: 50px; }
+      &:nth-of-type(3) { top: 90px; }
+      &:nth-of-type(4) { top: 130px; }
     }
 
     ::placeholder { text-transform: uppercase; }

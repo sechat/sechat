@@ -81,17 +81,12 @@ module Diaspora
       templates.js
       validation.js
 
-      bootstrap.css
-      bootstrap-complete.css
-      bootstrap-responsive.css
       error_pages.css
       admin.css
-      mobile/mobile.css
       rtl.css
       home.css
-
-      # images from facebox gem
-      facebox/*
+      color_themes/*/desktop.css
+      color_themes/*/mobile.css
     }
 
     # Version of your assets, change this if you want to expire all your assets

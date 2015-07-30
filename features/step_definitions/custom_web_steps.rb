@@ -102,8 +102,7 @@ end
 
 When /^I click to delete the first comment$/ do
   within("div.comment", match: :first) do
-    find(".control-icons").hover
-    find(".comment_delete").click
+    find(".comment_delete", visible: false).click
   end
 end
 
@@ -126,12 +125,6 @@ end
 
 And /^I reject the alert$/ do
   page.driver.browser.switch_to.alert.dismiss
-end
-
-When /^(.*) in the modal window$/ do |action|
-  within('#facebox') do
-    step action
-  end
 end
 
 When /^(.*) in the mention modal$/ do |action|
@@ -208,7 +201,7 @@ end
 
 
 Then /^the notification dropdown should be visible$/ do
-  find(:css, "#notification_dropdown").should be_visible
+  expect(find(:css, "#notification-dropdown")).to be_visible
 end
 
 Then /^the notification dropdown scrollbar should be visible$/ do
@@ -243,8 +236,12 @@ And "I wait for the popovers to appear" do
 end
 
 And /^I click close on all the popovers$/ do
+  page.execute_script("$('.popover .close')[0].click();")
+  expect(page).to have_selector(".popover", count: 2)
+  page.execute_script("$('.popover .close')[0].click();")
+  expect(page).to have_selector(".popover", count: 1)
   page.execute_script("$('.popover .close').click();")
-  page.should_not have_selector(".popover .close")
+  expect(page).to_not have_selector(".popover .close")
 end
 
 Then /^I should see a flash message indicating success$/ do

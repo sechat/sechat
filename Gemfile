@@ -18,6 +18,7 @@ gem "diaspora_federation-rails", "0.0.3"
 
 gem "acts_as_api", "0.4.2"
 gem "json",        "1.8.3"
+gem "json-schema", "2.5.1"
 
 # Authentication
 
@@ -52,17 +53,20 @@ gem "rack-cors", "0.4.0", require: "rack/cors"
 
 # CSS
 
-gem "bootstrap-sass", "2.3.2.2"
+gem "bootstrap-sass", "3.3.5"
 gem "compass-rails",  "2.0.4"
 gem "sass-rails",     "5.0.1"
 gem "autoprefixer-rails", "5.2.1"
+gem "bootstrap-switch-rails", "3.3.3"
 
 # Database
 
-ENV["DB"] ||= "mysql"
-
-gem "mysql2", "0.3.18" if ENV["DB"] == "all" || ENV["DB"] == "mysql"
-gem "pg",     "0.18.2" if ENV["DB"] == "all" || ENV["DB"] == "postgres"
+group :mysql, optional: true do
+  gem "mysql2", "0.3.18"
+end
+group :postgresql, optional: true do
+  gem "pg",     "0.18.1"
+end
 
 gem "activerecord-import", "0.8.0"
 
@@ -78,7 +82,7 @@ gem "uuid", "2.3.8"
 
 # Icons
 
-gem "entypo-rails", "2.2.3"
+gem "entypo-rails", "3.0.0.pre.rc2"
 
 # JavaScript
 
@@ -95,7 +99,7 @@ source "https://rails-assets.org" do
   gem "rails-assets-markdown-it",                         "4.4.0"
   gem "rails-assets-markdown-it-hashtag",                 "0.3.1"
   gem "rails-assets-markdown-it-diaspora-mention",        "0.3.0"
-  gem "rails-assets-markdown-it-sanitizer",               "0.3.1"
+  gem "rails-assets-markdown-it-sanitizer",               "0.3.2"
   gem "rails-assets-markdown-it--markdown-it-for-inline", "0.1.1"
   gem "rails-assets-markdown-it-sub",                     "1.0.0"
   gem "rails-assets-markdown-it-sup",                     "1.0.0"
@@ -108,9 +112,8 @@ source "https://rails-assets.org" do
   gem "rails-assets-jquery-textchange",             "0.2.3"
   gem "rails-assets-perfect-scrollbar",             "0.6.3"
   gem "rails-assets-jakobmattsson--jquery-elastic", "1.6.11"
+  gem "rails-assets-autosize",                      "3.0.8"
 end
-
-gem "facebox-rails", "0.2.0"
 
 # Localization
 
@@ -147,7 +150,7 @@ gem "active_model_serializers", "0.9.3"
 
 # XMPP chat dependencies
 gem "diaspora-vines",             "~> 0.1.27"
-gem "rails-assets-diaspora_jsxc", "~> 0.1.1", source: "https://rails-assets.org"
+gem "rails-assets-diaspora_jsxc", "~> 0.1.3", source: "https://rails-assets.org"
 
 # Tags
 
@@ -230,8 +233,11 @@ group :development do
   gem "rb-inotify",     "0.9.5", require: false
 
   # Linters
-  gem "jshintrb", "0.3.0"
-  gem "rubocop",  "0.32.0"
+  gem "jshintrb",       "0.3.0"
+  gem "rubocop",        "0.32.0"
+  gem "pronto",         "0.4.2"
+  gem "pronto-jshint",  "0.4.2"
+  gem "pronto-rubocop", "0.4.4"
 
   # Preloading environment
 
@@ -262,11 +268,6 @@ group :test do
   gem "database_cleaner" ,  "1.4.1"
   gem "selenium-webdriver", "2.45.0"
 
-  source "https://rails-assets.org" do
-    gem "rails-assets-jquery-simulate",     "1.0.1"
-    gem "rails-assets-jquery-simulate-ext", "1.3.0"
-  end
-
   # General helpers
 
   gem "factory_girl_rails", "4.5.0"
@@ -283,7 +284,7 @@ group :development, :test do
   gem "cucumber-rails",     "1.4.2", require: false
 
   # Jasmine (client side application tests (JS))
-  gem "jasmine",                   "2.2.0"
+  gem "jasmine",                   "2.3.0"
   gem "jasmine-jquery-rails",      "2.0.3"
   gem "rails-assets-jasmine-ajax", "3.2.0", source: "https://rails-assets.org"
   gem "sinon-rails",               "1.15.0"

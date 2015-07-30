@@ -1,17 +1,8 @@
 #notifications_container {
-  .nav.nav-tabs{
-    li > a {
-      .badge.badge-default { display: none; }
-    }
-  }
-
   .stream {
     .header {
       border-bottom: 1px solid $border-grey;
-      .btn-toolbar, h4 {
-        margin-bottom: 10px;
-        line-height: 40px;
-      }
+      .btn-toolbar { margin: 11px 0; }
       margin-bottom: 10px;
     }
 
@@ -55,47 +46,53 @@
       overflow: visible;
     }
 
-    .stream_element.media {
-      padding: 10px;
-      margin: 0px;
-      font-size: 13px;
-      line-height: 18px;
-      border-bottom: 1px solid $border-grey;
-      &:last-child { border: none !important; }
-
-      &.unread {
-        background-color: $background-grey;
-        .unread-toggle {
-          opacity: 1 !important;
-          .entypo { color: $black; }
-        }
-      }
-
-      &:hover {
-        .unread-toggle { opacity: 1 !important; }
-      }
-
-      .avatar {
-        width: 35px;
-        height: 35px;
-      }
-
-      .unread-toggle {
-        padding: 9px 5px;
-        .entypo {
-          cursor: pointer;
-          color: lighten($black,75%);
-          font-size: 17px;
-          line-height: 17px;
-        }
-        opacity: 0;
-      }
-
-      .btn-group.aspect_membership_dropdown { margin: 5px 0; }
-    }
-
     .pagination { text-align: center; }
 
     .no_notifications { text-align: center; }
+  }
+
+  .list-group .list-group-item {
+    [class^="entypo-"], [class*="entypo-"], .mentionIcon { margin-right: 5px; }
+    .mentionIcon { font-weight: bold; }
+  }
+}
+
+#notifications_container .stream, header .nav-badges .notifications {
+  .stream_element.media {
+    padding: 10px;
+    margin: 0px;
+    line-height: 18px;
+    border-bottom: 1px solid $border-grey;
+    &:last-child { border: none !important; }
+
+    &.unread {
+      background-color: $background-grey;
+      .unread-toggle {
+        opacity: 1 !important;
+        .entypo-eye { color: $black; }
+      }
+    }
+
+    &:hover {
+      .unread-toggle { opacity: 1 !important; }
+    }
+
+    .avatar {
+      width: 35px;
+      height: 35px;
+    }
+
+    .unread-toggle {
+      padding: 9px 5px;
+      .entypo-eye {
+        cursor: pointer;
+        color: lighten($black,75%);
+        font-size: 17px;
+        line-height: 17px;
+      }
+      opacity: 0;
+    }
+
+    .btn-group.aspect_membership_dropdown { margin: 5px 0; }
   }
 }

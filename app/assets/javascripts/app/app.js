@@ -46,7 +46,6 @@ var app = {
     app.router = new app.Router();
 
     this.setupDummyPreloads();
-    this.setupFacebox();
     this.setupUser();
     this.setupHeader();
     this.setupBackboneLinks();
@@ -64,7 +63,7 @@ var app = {
   },
 
   parsePreload : function(prop) {
-      if(!app.hasPreload(prop)) { return }
+      if(!app.hasPreload(prop)) { return; }
 
       var preload = window.gon.preloads[prop];
       delete window.gon.preloads[prop]; //prevent dirty state across navigates
@@ -90,12 +89,6 @@ var app = {
     }
   },
 
-  setupFacebox: function() {
-    $.facebox.settings.closeImage = ImagePaths.get('facebox/closelabel.png');
-    $.facebox.settings.loadingImage = ImagePaths.get('facebox/loading.gif');
-    $.facebox.settings.opacity = 0.75;
-  },
-
   setupBackboneLinks: function() {
     Backbone.history.start({pushState: true});
 
@@ -119,7 +112,7 @@ var app = {
 
   /* mixpanel wrapper function */
   instrument : function(type, name, object, callback) {
-    if(!window.mixpanel) { return }
+    if(!window.mixpanel) { return; }
     window.mixpanel[type](name, object, callback);
   },
 
@@ -127,7 +120,7 @@ var app = {
     $("a.disabled").click(function(event) {
       event.preventDefault();
     });
-  },
+  }
 };
 
 $(function() {

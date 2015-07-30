@@ -1,22 +1,10 @@
-html,
 body {
-  /* hack to ensure fixed elements at height: 100%; are in relation to the window */
-  max-height : 100%;
-}
-
-body {
-  margin-top: 40px;
+  margin-top: 50px;
   padding : none;
-  font-size: $font-size-text;
 
   &.lock {
     overflow: hidden;
   }
-}
-
-blockquote p {
-  font-size: $font-size-text;
-  line-height: $line-height;
 }
 
 /* Overflow */
@@ -26,9 +14,6 @@ blockquote,
 code,
 pre { word-wrap: break-word; }
 a.tag { word-break: break-all; }
-
-/* new link color */
-a { color : $link-blue  }
 
 .avatar {
   border-radius: 4px;
@@ -63,7 +48,6 @@ a { color : $link-blue  }
     display : inline-block;
     position : relative;
     top : 1px;
-    font-family : Roboto-Bold;
   }
 }
 
@@ -72,7 +56,7 @@ a { color : $link-blue  }
   color: white;
   position: fixed;
   z-index: 49;
-  right: 20px;
+  right: 54px;
   bottom: 20px;
   opacity: 0;
   font-size: 2.9em;
@@ -98,5 +82,5 @@ a { color : $link-blue  }
 @media (max-width: 767px) {
   body {
     padding : 0;
- }
+  }
 }

@@ -1,9 +1,83 @@
+# 0.6.0.0
+
+## The DB environment variable is gone
+
+With Bundler 1.10 supporting optional groups, we removed the DB environment variable. When updating to this release, please update
+bundler and select the database support you want:
+
+```sh
+gem install bundler
+bundle install --with mysql # For MySQL and MariaDB
+bundle install --with postgresql # For PostgreSQL
+```
+
+For production setups we now additionally recommend adding the `--deployment` flag.
+If you set the DB environment variable anywhere, that's no longer necessary.
+
+## Supported Ruby versions
+
+This release recommends using Ruby 2.2, while retaining Ruby 2.1 as an officially supported version.
+Ruby 2.0 is no longer officially supported.
+
+## Configuration changes
+
+Please note that the default listen parameter for production setups got
+changed. diaspora\* will no longer listen on `0.0.0.0:3000` as it will now
+bind to an UNIX socket at `unix:tmp/diaspora.sock`. Please change your local
+`diaspora.yml` if necessary.
+
+## Terms of Use design changes
+
+With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. If you have created a customised app/views/terms/terms.haml or app/views/terms/terms.erb file, you will need to edit those files to base your customisations on the new default.haml file.
+
+## Refactor
+* Improve bookmarklet [#5904](https://github.com/diaspora/diaspora/pull/5904)
+* Update listen configuration to listen on unix sockets by default [#5974](https://github.com/diaspora/diaspora/pull/5974)
+* Port to Bootstrap 3 [#6015](https://github.com/diaspora/diaspora/pull/6015)
+* Use a fixed width for the mobile drawer [#6057](https://github.com/diaspora/diaspora/pull/6057)
+* Replace jquery.autoresize with autosize [#6104](https://github.com/diaspora/diaspora/pull/6104)
+* Improve mobile conversation design [#6087](https://github.com/diaspora/diaspora/pull/6087)
+* Replace remaining faceboxes with Bootstrap modals [#6106](https://github.com/diaspora/diaspora/pull/6106) [#6161](https://github.com/diaspora/diaspora/pull/6161)
+* Rewrite header using Bootstrap 3 [#6109](https://github.com/diaspora/diaspora/pull/6109) [#6130](https://github.com/diaspora/diaspora/pull/6130) [#6132](https://github.com/diaspora/diaspora/pull/6132)
+* Use upstream CSS mappings for Entypo [#6158](https://github.com/diaspora/diaspora/pull/6158)
+* Replace some mobile icons with Entypo [#6218](https://github.com/diaspora/diaspora/pull/6218)
+* Refactor publisher backbone view [#6228](https://github.com/diaspora/diaspora/pull/6228)
+
+## Bug fixes
+* Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
+* Improve accessibility of a couple pages [#6227](https://github.com/diaspora/diaspora/pull/6227)
+
+## Features
+* Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
+* Add mobile services and privacy settings pages [#6086](https://github.com/diaspora/diaspora/pull/6086)
+* Optionally make your extended profile details public [#6162](https://github.com/diaspora/diaspora/pull/6162)
+* Add admin dashboard showing latest diaspora\* version [#6216](https://github.com/diaspora/diaspora/pull/6216)
+* Display poll & location on mobile [#6238](https://github.com/diaspora/diaspora/pull/6238)
+* Update counts on contacts page dynamically [#6240](https://github.com/diaspora/diaspora/pull/6240)
+* Add support for relay based public post federation [#6207](https://github.com/diaspora/diaspora/pull/6207)
+
+# 0.5.3.0
+
+## Refactor
+* Drop broken correlations from the admin pages [#6223](https://github.com/diaspora/diaspora/pull/6223)
+* Extract PostService from PostsController [#6208](https://github.com/diaspora/diaspora/pull/6208)
+
+## Bug fixes
+* Fix indentation and a link title on the default home page [#6212](https://github.com/diaspora/diaspora/pull/6212)
+* Bring peeping Tom on the 404 page back [#6226](https://github.com/diaspora/diaspora/pull/6226)
+* Fix mobile photos index page [#6243](https://github.com/diaspora/diaspora/pull/6243)
+
+## Features
+
+* Implement NodeInfo [#6239](https://github.com/diaspora/diaspora/pull/6239)
+
 # 0.5.2.0
 
 ## Refactor
 * Update perfect-scrollbar [#6085](https://github.com/diaspora/diaspora/pull/6085)
 * Remove top margin for first heading in a post [#6110](https://github.com/diaspora/diaspora/pull/6110)
 * Add link to pod statistics in right navigation [#6117](https://github.com/diaspora/diaspora/pull/6117)
+* Update to Rails 4.2.3 [#6140](https://github.com/diaspora/diaspora/pull/6140)
 * Refactor person related URL generation [#6168](https://github.com/diaspora/diaspora/pull/6168)
 * Move webfinger and HCard generation out of the core and embed the `diaspora_federation-rails` gem [#6151](https://github.com/diaspora/diaspora/pull/6151/)
 * Refactor rspec tests to to use `let` instead of before blocks [#6199](https://github.com/diaspora/diaspora/pull/6199)

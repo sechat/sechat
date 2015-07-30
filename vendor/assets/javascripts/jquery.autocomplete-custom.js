@@ -571,7 +571,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		element = $("<div/>")
 		.hide()
 		.addClass(options.resultsClass)
-		.css("position", "absolute")
+		.css("position", "fixed")
 		.appendTo(document.body);
 
 		list = $("<ul/>").appendTo(element).mouseover( function(event) {
@@ -704,7 +704,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			var offset = $(input).offset();
 			element.css({
 				width: typeof options.width == "string" || options.width > 0 ? options.width : $(input).width(),
-				top: offset.top + input.offsetHeight,
+				top: offset.top + input.offsetHeight - $("nav.navbar").offset().top,
 				left: offset.left
 			}).show();
             if(options.scroll) {

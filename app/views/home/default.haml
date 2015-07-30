@@ -3,7 +3,7 @@
 
 #page.container
   %header#header
-    %a#login-link.btn{href: "login"} Log In
+    %a#login-link.btn.btn-default{href: "login"} Log In
     = image_tag "branding/logos/logo.png"
 
   #banner.row
@@ -11,22 +11,22 @@
     %h3 You're about to change the Internet. Let's get you set up, shall we?
 
   #steps.row
-    .span4
+    .col-md-4
       %h2
         Configure your
         %abbr.helpful{title: "A Diaspora installation"} pod
       = image_tag "landing/cog.png"
 
       %p
-      Look at
-      %code.helpful{title: "General pod configuration (location to upload photos, SSL certs, etc.)"}
-        config/diaspora.yml.example
-      and
-      %code.helpful{title: "MySQL username/password"}
-        config/database.yml.example
-      for help.
+        Look at
+        %code.helpful{title: "General pod configuration (location to upload photos, SSL certs, etc.)"}
+          config/diaspora.yml.example
+        and
+        %code.helpful{title: "MySQL username/password"}
+          config/database.yml.example
+        for help.
 
-    .span4
+    .col-md-4
       %h2 Try it out
       = image_tag "landing/smiley_laughing.png"
 
@@ -34,7 +34,7 @@
         Start by
         = link_to "creating an account", new_user_registration_path
 
-    .span4
+    .col-md-4
       %h2 Make a contribution!
       = image_tag "landing/pen_write.png"
 
@@ -48,7 +48,7 @@
     %ul#links
       %ul.section
         %li= link_to "Codebase", "http://github.com/diaspora/diaspora", title: "Git repository"
-        %li= link_to "Documentation", "http://wiki.diasporafoundation.org", title: "Wiki on github"
+        %li= link_to "Documentation", "http://wiki.diasporafoundation.org", title: "Project wiki"
       %ul.section
         %li= link_to "IRC - General", "http://webchat.freenode.net/?channels=diaspora", title: "#diaspora"
         %li= link_to "IRC - Development", "http://webchat.freenode.net/?channels=diaspora-dev", title: "#diaspora-dev"
