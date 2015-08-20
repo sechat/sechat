@@ -7,7 +7,6 @@
 
 /* core */
 @import 'media-box';
-@import 'autocomplete';
 @import 'entypo';
 @import 'icons';
 @import 'mentions';
@@ -16,11 +15,12 @@
 @import 'hovercard';
 @import 'new_styles/base';
 @import 'new_styles/interactions';
-@import 'new_styles/spinner';
+@import 'spinner';
 @import 'lightbox';
 @import 'timeago';
 @import 'vendor/fileuploader';
 @import 'vendor/autoSuggest';
+@import 'typeahead';
 
 /* font overrides */
 @import 'new_styles/typography';

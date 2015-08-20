@@ -42,10 +42,17 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Use upstream CSS mappings for Entypo [#6158](https://github.com/diaspora/diaspora/pull/6158)
 * Replace some mobile icons with Entypo [#6218](https://github.com/diaspora/diaspora/pull/6218)
 * Refactor publisher backbone view [#6228](https://github.com/diaspora/diaspora/pull/6228)
+* Replace MBP.autogrow with autosize on mobile [#6261](https://github.com/diaspora/diaspora/pull/6261)
+* Improve mobile drawer transition [#6233](https://github.com/diaspora/diaspora/pull/6233)
+* Remove unused header icons and an unused favicon  [#6283](https://github.com/diaspora/diaspora/pull/6283)
+* Replace mobile icons for post interactions with Entypo icons [#6291](https://github.com/diaspora/diaspora/pull/6291)
+* Replace jquery.autocomplete with typeahead.js [#6293](https://github.com/diaspora/diaspora/pull/6293)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
 * Improve accessibility of a couple pages [#6227](https://github.com/diaspora/diaspora/pull/6227)
+* Capitalize "Powered by diaspora" [#6254](https://github.com/diaspora/diaspora/pull/6254)
+* Display username and avatar for NSFW posts in mobile view [#6245](https://github.com/diaspora/diaspora/6245)
 
 ## Features
 * Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
@@ -55,21 +62,32 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Display poll & location on mobile [#6238](https://github.com/diaspora/diaspora/pull/6238)
 * Update counts on contacts page dynamically [#6240](https://github.com/diaspora/diaspora/pull/6240)
 * Add support for relay based public post federation [#6207](https://github.com/diaspora/diaspora/pull/6207)
+* Bigger mobile publisher [#6261](https://github.com/diaspora/diaspora/pull/6261)
 
 # 0.5.3.0
 
 ## Refactor
 * Drop broken correlations from the admin pages [#6223](https://github.com/diaspora/diaspora/pull/6223)
 * Extract PostService from PostsController [#6208](https://github.com/diaspora/diaspora/pull/6208)
+* Drop outdated/unused mbp-respond.min.js and mbp-modernizr-custom.js [#6257](https://github.com/diaspora/diaspora/pull/6257)
+* Refactor ApplicationController#after\_sign\_out\_path\_for [#6258](https://github.com/diaspora/diaspora/pull/6258)
+* Extract StatusMessageService from StatusMessagesController [#6280](https://github.com/diaspora/diaspora/pull/6280)
+* Refactor HomeController#toggle\_mobile [#6260](https://github.com/diaspora/diaspora/pull/6260)
+* Extract CommentService from CommentsController [#6307](https://github.com/diaspora/diaspora/pull/6307)
 
 ## Bug fixes
 * Fix indentation and a link title on the default home page [#6212](https://github.com/diaspora/diaspora/pull/6212)
 * Bring peeping Tom on the 404 page back [#6226](https://github.com/diaspora/diaspora/pull/6226)
 * Fix mobile photos index page [#6243](https://github.com/diaspora/diaspora/pull/6243)
+* Fix conversations view with no contacts [#6266](https://github.com/diaspora/diaspora/pull/6266)
+* Links in the left sidebar are now clickable on full width [#6267](https://github.com/diaspora/diaspora/pull/6267)
+* Guard against passing nil into person\_image\_tag [#6286](https://github.com/diaspora/diaspora/pull/6286)
 
 ## Features
 
 * Implement NodeInfo [#6239](https://github.com/diaspora/diaspora/pull/6239)
+* Display original author on reshares of NSFW posts [#6270](https://github.com/diaspora/diaspora/pull/6270)
+* Use avatars in hovercards as links to the profile [#6297](https://github.com/diaspora/diaspora/pull/6297)
 
 # 0.5.2.0
 

@@ -6,9 +6,7 @@
  */
 //= require jquery.charcount
 //= require js-routes
-//= require mbp-modernizr-custom
-//= require mbp-respond.min
-//= require mbp-helper
+//= require autosize
 //= require jquery.autoSuggest.custom
 //= require fileuploader-custom
 //= require rails-timeago
@@ -20,12 +18,13 @@
 //= require mobile/mobile_file_uploader
 //= require mobile/profile_aspects
 //= require mobile/tag_following
-//= require mobile/mobile_comments.js
+//= require mobile/publisher
+//= require mobile/mobile_comments
 
 $(document).ready(function(){
 
   $('.shield a').click(function(){
-    $(this).parents('.shield_wrapper').remove();
+    $(this).parents(".stream_element").removeClass("shield-active");
     return false;
   });
   var showLoader = function(link){
@@ -39,25 +38,25 @@ $(document).ready(function(){
   };
 
   /* Drawer menu */
-  $('#menu_badge').bind("tap click", function(evt){
+  $("#menu_badge").bind("tap click", function(evt){
     evt.preventDefault();
-    $("#app").toggleClass('draw');
+    $("#app").toggleClass("draw");
   });
 
   /* Show / hide aspects in the drawer */
-  $('#all_aspects').bind("tap click", function(evt){
+  $("#all_aspects").bind("tap click", function(evt){
     evt.preventDefault();
-    $("#all_aspects + li").toggleClass('hide');
+    $("#all_aspects + li").toggleClass("hide");
   });
 
   /* Show / hide followed tags in the drawer */
-  $('#followed_tags').bind("tap click", function(evt){
+  $("#followed_tags > a").bind("tap click", function(evt){
     evt.preventDefault();
-    $("#followed_tags + li").toggleClass('hide');
+    $("#followed_tags + li").toggleClass("hide");
   });
 
   /* Heart toggle */
-  $(".like_action", ".stream").bind("tap click", function(evt){
+  $(".like-action", ".stream").bind("tap click", function(evt){
     evt.preventDefault();
     var link = $(this),
         likeCounter = $(this).closest(".stream_element").find("like_count"),
@@ -100,7 +99,7 @@ $(document).ready(function(){
   });
 
   /* Reshare */
-  $(".reshare_action", ".stream").bind("tap click", function(evt){
+  $(".reshare-action", ".stream").bind("tap click", function(evt){
     evt.preventDefault();
 
     var link = $(this),
@@ -126,43 +125,6 @@ $(document).ready(function(){
         }
       }
     }
-  });
-
-  $(".service_icon").bind("tap click", function() {
-    var service = $(this).toggleClass("dim"),
-      selectedServices = $("#new_status_message .service_icon:not(.dim)"),
-      provider = service.attr("id"),
-      hiddenField = $("#new_status_message input[name='services[]'][value='" + provider + "']"),
-      publisherMaxChars = 40000,
-      serviceMaxChars;
-
-
-    $("#new_status_message .counter").remove();
-
-    $.each(selectedServices, function() {
-      serviceMaxChars = parseInt($(this).attr("maxchar"));
-      if(publisherMaxChars > serviceMaxChars) {
-        publisherMaxChars = serviceMaxChars;
-      }
-    });
-
-    $('#status_message_text').charCount({allowed: publisherMaxChars, warning: publisherMaxChars/10 });
-
-    if(hiddenField.length > 0) { hiddenField.remove(); }
-    else {
-      $("#new_status_message").append(
-        $("<input/>", {
-          name: "services[]",
-          type: "hidden",
-          value: provider
-        })
-      );
-    }
-  });
-
-  $("#submit_new_message").bind("tap click", function(evt){
-    evt.preventDefault();
-    $("#new_status_message").submit();
   });
 });
 // @license-end
