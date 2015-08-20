@@ -87,16 +87,16 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text     "text",                    limit: 65535,                  null: false
-    t.integer  "commentable_id",          limit: 4,                      null: false
-    t.integer  "author_id",               limit: 4,                      null: false
-    t.string   "guid",                    limit: 255,                    null: false
-    t.text     "author_signature",        limit: 65535
-    t.text     "parent_author_signature", limit: 65535
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.integer  "likes_count",             limit: 4,     default: 0,      null: false
-    t.string   "commentable_type",        limit: 60,    default: "Post", null: false
+    t.text     "text",                    limit: 16777215,                  null: false
+    t.integer  "commentable_id",          limit: 4,                         null: false
+    t.integer  "author_id",               limit: 4,                         null: false
+    t.string   "guid",                    limit: 255,                       null: false
+    t.text     "author_signature",        limit: 16777215
+    t.text     "parent_author_signature", limit: 16777215
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.integer  "likes_count",             limit: 4,        default: 0,      null: false
+    t.string   "commentable_type",        limit: 60,       default: "Post", null: false
   end
 
   add_index "comments", ["author_id"], name: "index_comments_on_person_id", using: :btree
@@ -137,6 +137,15 @@ ActiveRecord::Schema.define(version: 20150724152052) do
 
   add_index "conversations", ["author_id"], name: "conversations_author_id_fk", using: :btree
 
+  create_table "donations", force: :cascade do |t|
+    t.string   "user_id",    limit: 255
+    t.string   "comment",    limit: 255,                null: false
+    t.float    "amount",     limit: 24,  default: 0.0
+    t.boolean  "anonymous",              default: true
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "invitation_codes", force: :cascade do |t|
     t.string   "token",      limit: 255
     t.integer  "user_id",    limit: 4
@@ -146,16 +155,16 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   end
 
   create_table "invitations", force: :cascade do |t|
-    t.text     "message",      limit: 65535
+    t.text     "message",      limit: 16777215
     t.integer  "sender_id",    limit: 4
     t.integer  "recipient_id", limit: 4
     t.integer  "aspect_id",    limit: 4
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "service",      limit: 255
     t.string   "identifier",   limit: 255
-    t.boolean  "admin",                      default: false
-    t.string   "language",     limit: 255,   default: "en"
+    t.boolean  "admin",                         default: false
+    t.string   "language",     limit: 255,      default: "en"
   end
 
   add_index "invitations", ["aspect_id"], name: "index_invitations_on_aspect_id", using: :btree
@@ -163,15 +172,15 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   add_index "invitations", ["sender_id"], name: "index_invitations_on_sender_id", using: :btree
 
   create_table "likes", force: :cascade do |t|
-    t.boolean  "positive",                              default: true
+    t.boolean  "positive",                                 default: true
     t.integer  "target_id",               limit: 4
     t.integer  "author_id",               limit: 4
     t.string   "guid",                    limit: 255
-    t.text     "author_signature",        limit: 65535
-    t.text     "parent_author_signature", limit: 65535
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "target_type",             limit: 60,                   null: false
+    t.text     "author_signature",        limit: 16777215
+    t.text     "parent_author_signature", limit: 16777215
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.string   "target_type",             limit: 60,                      null: false
   end
 
   add_index "likes", ["author_id"], name: "likes_author_id_fk", using: :btree
@@ -198,14 +207,14 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   add_index "mentions", ["post_id"], name: "index_mentions_on_post_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "conversation_id",         limit: 4,     null: false
-    t.integer  "author_id",               limit: 4,     null: false
-    t.string   "guid",                    limit: 255,   null: false
-    t.text     "text",                    limit: 65535, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "author_signature",        limit: 65535
-    t.text     "parent_author_signature", limit: 65535
+    t.integer  "conversation_id",         limit: 4,        null: false
+    t.integer  "author_id",               limit: 4,        null: false
+    t.string   "guid",                    limit: 255,      null: false
+    t.text     "text",                    limit: 16777215, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.text     "author_signature",        limit: 16777215
+    t.text     "parent_author_signature", limit: 16777215
   end
 
   add_index "messages", ["author_id"], name: "index_messages_on_author_id", using: :btree
@@ -237,8 +246,8 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   add_index "notifications", ["target_type", "target_id"], name: "index_notifications_on_target_type_and_target_id", length: {"target_type"=>190, "target_id"=>nil}, using: :btree
 
   create_table "o_embed_caches", force: :cascade do |t|
-    t.string "url",  limit: 1024,  null: false
-    t.text   "data", limit: 65535, null: false
+    t.string "url",  limit: 1024,     null: false
+    t.text   "data", limit: 16777215, null: false
   end
 
   add_index "o_embed_caches", ["url"], name: "index_o_embed_caches_on_url", length: {"url"=>191}, using: :btree
@@ -248,34 +257,34 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string "ob_type",     limit: 255
     t.text   "image",       limit: 65535
     t.text   "url",         limit: 65535
-    t.text   "description", limit: 65535
+    t.text   "description", limit: 16777215
   end
 
   create_table "participations", force: :cascade do |t|
     t.string   "guid",                    limit: 255
     t.integer  "target_id",               limit: 4
-    t.string   "target_type",             limit: 60,                null: false
+    t.string   "target_type",             limit: 60,                   null: false
     t.integer  "author_id",               limit: 4
-    t.text     "author_signature",        limit: 65535
-    t.text     "parent_author_signature", limit: 65535
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.integer  "count",                   limit: 4,     default: 1, null: false
+    t.text     "author_signature",        limit: 16777215
+    t.text     "parent_author_signature", limit: 16777215
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "count",                   limit: 4,        default: 1, null: false
   end
 
   add_index "participations", ["guid"], name: "index_participations_on_guid", length: {"guid"=>191}, using: :btree
   add_index "participations", ["target_id", "target_type", "author_id"], name: "index_participations_on_target_id_and_target_type_and_author_id", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "guid",                  limit: 255,                   null: false
-    t.text     "url",                   limit: 65535,                 null: false
-    t.string   "diaspora_handle",       limit: 255,                   null: false
-    t.text     "serialized_public_key", limit: 65535,                 null: false
+    t.string   "guid",                  limit: 255,                      null: false
+    t.text     "url",                   limit: 16777215,                 null: false
+    t.string   "diaspora_handle",       limit: 255,                      null: false
+    t.text     "serialized_public_key", limit: 16777215,                 null: false
     t.integer  "owner_id",              limit: 4
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.boolean  "closed_account",                      default: false
-    t.integer  "fetch_status",          limit: 4,     default: 0
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.boolean  "closed_account",                         default: false
+    t.integer  "fetch_status",          limit: 4,        default: 0
   end
 
   add_index "people", ["diaspora_handle"], name: "index_people_on_diaspora_handle", unique: true, length: {"diaspora_handle"=>191}, using: :btree
@@ -284,13 +293,13 @@ ActiveRecord::Schema.define(version: 20150724152052) do
 
   create_table "photos", force: :cascade do |t|
     t.integer  "tmp_old_id",          limit: 4
-    t.integer  "author_id",           limit: 4,                     null: false
-    t.boolean  "public",                            default: false, null: false
+    t.integer  "author_id",           limit: 4,                        null: false
+    t.boolean  "public",                               default: false, null: false
     t.string   "diaspora_handle",     limit: 255
-    t.string   "guid",                limit: 255,                   null: false
-    t.boolean  "pending",                           default: false, null: false
-    t.text     "text",                limit: 65535
-    t.text     "remote_photo_path",   limit: 65535
+    t.string   "guid",                limit: 255,                      null: false
+    t.boolean  "pending",                              default: false, null: false
+    t.text     "text",                limit: 16777215
+    t.text     "remote_photo_path",   limit: 16777215
     t.string   "remote_photo_name",   limit: 255
     t.string   "random_string",       limit: 255
     t.string   "processed_image",     limit: 255
@@ -328,8 +337,8 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string   "guid",                    limit: 255
     t.text     "author_signature",        limit: 65535
     t.text     "parent_author_signature", limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "poll_participations", ["poll_id"], name: "index_poll_participations_on_poll_id", using: :btree
@@ -339,26 +348,37 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.integer  "status_message_id", limit: 4,   null: false
     t.boolean  "status"
     t.string   "guid",              limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "polls", ["status_message_id"], name: "index_polls_on_status_message_id", using: :btree
 
+  create_table "post_reporters", force: :cascade do |t|
+    t.integer  "post_id",    limit: 4
+    t.string   "user_id",    limit: 255
+    t.boolean  "reviewed",                    default: false
+    t.text     "text",       limit: 16777215
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "post_reporters", ["post_id"], name: "index_post_reporters_on_post_id", using: :btree
+
   create_table "posts", force: :cascade do |t|
-    t.integer  "author_id",             limit: 4,                     null: false
-    t.boolean  "public",                              default: false, null: false
+    t.integer  "author_id",             limit: 4,                        null: false
+    t.boolean  "public",                                 default: false, null: false
     t.string   "diaspora_handle",       limit: 255
-    t.string   "guid",                  limit: 255,                   null: false
-    t.boolean  "pending",                             default: false, null: false
-    t.string   "type",                  limit: 40,                    null: false
-    t.text     "text",                  limit: 65535
-    t.text     "remote_photo_path",     limit: 65535
+    t.string   "guid",                  limit: 255,                      null: false
+    t.boolean  "pending",                                default: false, null: false
+    t.string   "type",                  limit: 40,                       null: false
+    t.text     "text",                  limit: 16777215
+    t.text     "remote_photo_path",     limit: 16777215
     t.string   "remote_photo_name",     limit: 255
     t.string   "random_string",         limit: 255
     t.string   "processed_image",       limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "unprocessed_image",     limit: 255
     t.string   "object_url",            limit: 255
     t.string   "image_url",             limit: 255
@@ -369,16 +389,16 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string   "objectId",              limit: 255
     t.string   "root_guid",             limit: 255
     t.string   "status_message_guid",   limit: 255
-    t.integer  "likes_count",           limit: 4,     default: 0
-    t.integer  "comments_count",        limit: 4,     default: 0
+    t.integer  "likes_count",           limit: 4,        default: 0
+    t.integer  "comments_count",        limit: 4,        default: 0
     t.integer  "o_embed_cache_id",      limit: 4
-    t.integer  "reshares_count",        limit: 4,     default: 0
+    t.integer  "reshares_count",        limit: 4,        default: 0
     t.datetime "interacted_at"
     t.string   "frame_name",            limit: 255
     t.string   "facebook_id",           limit: 255
     t.string   "tweet_id",              limit: 255
     t.integer  "open_graph_cache_id",   limit: 4
-    t.text     "tumblr_ids",            limit: 65535
+    t.text     "tumblr_ids",            limit: 16777215
   end
 
   add_index "posts", ["author_id", "root_guid"], name: "index_posts_on_author_id_and_root_guid", unique: true, length: {"author_id"=>nil, "root_guid"=>190}, using: :btree
@@ -400,15 +420,15 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string   "image_url_medium", limit: 255
     t.date     "birthday"
     t.string   "gender",           limit: 255
-    t.text     "bio",              limit: 65535
-    t.boolean  "searchable",                     default: true,  null: false
-    t.integer  "person_id",        limit: 4,                     null: false
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.text     "bio",              limit: 16777215
+    t.boolean  "searchable",                        default: true,  null: false
+    t.integer  "person_id",        limit: 4,                        null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.string   "location",         limit: 255
     t.string   "full_name",        limit: 70
-    t.boolean  "nsfw",                           default: false
-    t.boolean  "public_details",               default: false
+    t.boolean  "nsfw",                              default: false
+    t.boolean  "public_details",                    default: false
   end
 
   add_index "profiles", ["full_name", "searchable"], name: "index_profiles_on_full_name_and_searchable", using: :btree
@@ -416,14 +436,14 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   add_index "profiles", ["person_id"], name: "index_profiles_on_person_id", using: :btree
 
   create_table "rails_admin_histories", force: :cascade do |t|
-    t.text     "message",    limit: 65535
+    t.text     "message",    limit: 16777215
     t.string   "username",   limit: 255
     t.integer  "item",       limit: 4
     t.string   "table",      limit: 255
     t.integer  "month",      limit: 2
     t.integer  "year",       limit: 8
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", length: {"item"=>nil, "table"=>188, "month"=>nil, "year"=>nil}, using: :btree
@@ -433,12 +453,12 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string   "item_type",  limit: 255,                   null: false
     t.boolean  "reviewed",                 default: false
     t.text     "text",       limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "user_id",    limit: 4,                     null: false
   end
 
-  add_index "reports", ["item_id"], name: "index_reports_on_item_id", using: :btree
+  add_index "reports", ["item_id"], name: "index_post_reports_on_post_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.integer  "person_id",  limit: 4
@@ -478,8 +498,8 @@ ActiveRecord::Schema.define(version: 20150724152052) do
   create_table "simple_captcha_data", force: :cascade do |t|
     t.string   "key",        limit: 40
     t.string   "value",      limit: 12
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "simple_captcha_data", ["key"], name: "idx_key", using: :btree
@@ -515,7 +535,7 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.integer "taggings_count", limit: 4,   default: 0
   end
 
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, length: {"name"=>191}, using: :btree
+  add_index "tags", ["name"], name: "index_tags_on_name", length: {"name"=>191}, using: :btree
 
   create_table "user_preferences", force: :cascade do |t|
     t.string   "email_type", limit: 255
@@ -526,23 +546,24 @@ ActiveRecord::Schema.define(version: 20150724152052) do
 
   create_table "users", force: :cascade do |t|
     t.string   "username",                           limit: 255
-    t.text     "serialized_private_key",             limit: 65535
-    t.boolean  "getting_started",                                  default: true,  null: false
-    t.boolean  "disable_mail",                                     default: false, null: false
+    t.text     "serialized_private_key",             limit: 16777215
+    t.boolean  "getting_started",                                     default: true,  null: false
+    t.boolean  "disable_mail",                                        default: false, null: false
     t.string   "language",                           limit: 255
-    t.string   "email",                              limit: 255,   default: "",    null: false
-    t.string   "encrypted_password",                 limit: 255,   default: "",    null: false
+    t.string   "email",                              limit: 255,      default: "",    null: false
+    t.boolean  "email_forward",                                       default: false
+    t.string   "encrypted_password",                 limit: 255,      default: "",    null: false
     t.string   "invitation_token",                   limit: 60
     t.datetime "invitation_sent_at"
     t.string   "reset_password_token",               limit: 255
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      limit: 4,     default: 0
+    t.integer  "sign_in_count",                      limit: 4,        default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",                 limit: 255
     t.string   "last_sign_in_ip",                    limit: 255
-    t.datetime "created_at",                                                       null: false
-    t.datetime "updated_at",                                                       null: false
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
     t.string   "invitation_service",                 limit: 127
     t.string   "invitation_identifier",              limit: 127
     t.integer  "invitation_limit",                   limit: 4
@@ -552,20 +573,20 @@ ActiveRecord::Schema.define(version: 20150724152052) do
     t.string   "unconfirmed_email",                  limit: 255
     t.string   "confirm_email_token",                limit: 30
     t.datetime "locked_at"
-    t.boolean  "show_community_spotlight_in_stream",               default: true,  null: false
-    t.boolean  "auto_follow_back",                                 default: false
+    t.boolean  "show_community_spotlight_in_stream",                  default: true,  null: false
+    t.boolean  "auto_follow_back",                                    default: false
     t.integer  "auto_follow_back_aspect_id",         limit: 4
-    t.text     "hidden_shareables",                  limit: 65535
+    t.text     "hidden_shareables",                  limit: 16777215
     t.datetime "reset_password_sent_at"
     t.datetime "last_seen"
     t.datetime "remove_after"
     t.string   "export",                             limit: 255
     t.datetime "exported_at"
-    t.boolean  "exporting",                                        default: false
-    t.boolean  "strip_exif",                                       default: true
+    t.boolean  "exporting",                                           default: false
+    t.boolean  "strip_exif",                                          default: true
     t.string   "exported_photos_file",               limit: 255
     t.datetime "exported_photos_at"
-    t.boolean  "exporting_photos",                                 default: false
+    t.boolean  "exporting_photos",                                    default: false
     t.string   "color_theme",                        limit: 255
   end
 
