@@ -74,6 +74,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Extract StatusMessageService from StatusMessagesController [#6280](https://github.com/diaspora/diaspora/pull/6280)
 * Refactor HomeController#toggle\_mobile [#6260](https://github.com/diaspora/diaspora/pull/6260)
 * Extract CommentService from CommentsController [#6307](https://github.com/diaspora/diaspora/pull/6307)
+* Extract user/profile discovery into the diaspora\_federation-rails gem [#6310](https://github.com/diaspora/diaspora/pull/6310)
 
 ## Bug fixes
 * Fix indentation and a link title on the default home page [#6212](https://github.com/diaspora/diaspora/pull/6212)
@@ -88,6 +89,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Implement NodeInfo [#6239](https://github.com/diaspora/diaspora/pull/6239)
 * Display original author on reshares of NSFW posts [#6270](https://github.com/diaspora/diaspora/pull/6270)
 * Use avatars in hovercards as links to the profile [#6297](https://github.com/diaspora/diaspora/pull/6297)
+* Remove avatars of ignored users from stream faces [#6320](https://github.com/diaspora/diaspora/pull/6320)
 
 # 0.5.2.0
 
