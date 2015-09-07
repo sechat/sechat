@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "4.2.3"
+gem "rails", "4.2.4"
 
 # Legacy Rails features, remove me!
 # responders (class level)
@@ -41,7 +41,7 @@ gem "sidetiq", "0.6.3"
 
 # Compression
 
-gem "uglifier", "2.7.1"
+gem "uglifier", "2.7.2"
 
 # Configuration
 
@@ -114,6 +114,7 @@ source "https://rails-assets.org" do
   gem "rails-assets-perfect-scrollbar",             "0.6.4"
   gem "rails-assets-jakobmattsson--jquery-elastic", "1.6.11"
   gem "rails-assets-autosize",                      "3.0.8"
+  gem "rails-assets-blueimp-gallery", "2.16.0"
 end
 
 # Localization
@@ -198,7 +199,7 @@ gem "minitest"
 group :production do # we don"t install these on travis to speed up test runs
   # Administration
 
-  gem "rails_admin", "0.6.8"
+  gem "rails_admin", "0.7.0"
 
   # Analytics
 
@@ -236,9 +237,11 @@ group :development do
   # Linters
   gem "jshintrb",       "0.3.0"
   gem "rubocop",        "0.32.1"
+  gem "haml_lint",      "0.13.0"
   gem "pronto",         "0.4.2"
   gem "pronto-jshint",  "0.4.2"
   gem "pronto-rubocop", "0.4.4"
+  gem "pronto-haml",    "0.4.3"
 
   # Preloading environment
 
@@ -267,7 +270,7 @@ group :test do
 
   gem "capybara",           "2.4.4"
   gem "database_cleaner" ,  "1.4.1"
-  gem "selenium-webdriver", "2.46.2"
+  gem "selenium-webdriver", "2.47.1"
 
   # General helpers
 

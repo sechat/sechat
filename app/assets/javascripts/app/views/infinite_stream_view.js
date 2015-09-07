@@ -13,6 +13,7 @@ app.views.InfScroll = app.views.Base.extend({
     this.postViews = this.postViews || [];
     this._resetPostFragments();
 
+    this.showLoader();
     this.bind("loadMore", this.fetchAndshowLoader, this);
     this.stream.bind("fetched", this.finishedLoading, this);
     this.stream.bind("allItemsLoaded", this.unbindInfScroll, this);
@@ -26,10 +27,6 @@ app.views.InfScroll = app.views.Base.extend({
   _resetPostFragments: function() {
     this.appendedPosts  = document.createDocumentFragment();
     this.prependedPosts = document.createDocumentFragment();
-  },
-
-  postRenderTemplate : function() {
-    if(this.stream.isFetching()) { this.showLoader() }
   },
 
   createPostView : function(post){
@@ -85,6 +82,7 @@ app.views.InfScroll = app.views.Base.extend({
     this.$el.prepend(this.prependedPosts);
     this.$el.append(this.appendedPosts);
     this._resetPostFragments();
+    this.postRenderTemplate();
   },
 
   finishedLoading: function() {

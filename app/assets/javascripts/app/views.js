@@ -53,7 +53,7 @@ app.views.Base = Backbone.View.extend({
     this.postRenderTemplate();
   },
 
-  postRenderTemplate : $.noop, //hella callbax yo
+  postRenderTemplate: $.noop, //hella callbax yo
 
   renderSubviews : function(){
     var self = this;
@@ -119,12 +119,14 @@ app.views.Base = Backbone.View.extend({
     });
   },
 
+  destroyConfirmMsg: function() { return Diaspora.I18n.t("confirm_dialog"); },
+
   destroyModel: function(evt) {
     evt && evt.preventDefault();
     var self = this;
     var url = this.model.urlRoot + '/' + this.model.id;
 
-    if (confirm(Diaspora.I18n.t("confirm_dialog"))) {
+    if( confirm(_.result(this, "destroyConfirmMsg")) ) {
       this.$el.addClass('deleting');
       this.model.destroy({ url: url })
         .done(function() {

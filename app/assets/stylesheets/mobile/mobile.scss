@@ -13,6 +13,8 @@
 @import "mobile/stream_element";
 @import "mobile/comments";
 
+@import "new_styles/typography";
+
 a {
   color: #2489ce;
   text-decoration: none;
@@ -34,10 +36,14 @@ body {
 
 h3 {  margin-top: 0; }
 .clear { clear: both; }
-#main { padding: 55px 10px 0 10px; }
+#main { padding: 56px 10px 0 10px; }
 
 .message {
   padding-left: 2px;
+}
+
+.avatar {
+  border-radius: 4px;
 }
 
 .stream_element,
@@ -52,7 +58,6 @@ h3 {  margin-top: 0; }
   * { max-width: 100%; }
 
   .avatar {
-    border-radius: 4px;
     float: left;
     margin-top: 0;
     max-width: 35px;
@@ -642,7 +647,7 @@ form#new_user.new_user input.btn {
   text-shadow: 1px 1px 20px rgb(126, 240, 77);
 }
 
-#conversation_inbox {
+#conversation_inbox, .notifications {
   div.pagination {
     width: 100%;
     margin-left: auto;
@@ -740,37 +745,6 @@ form p.checkbox_select {
     display: inline;
     &:first-of-type{ float: left; }
     &:last-of-type{ float: right; }
-  }
-}
-
-#file-upload.button {
-  @include button-gradient($light-grey);
-  border-radius: 3px;
-  box-shadow: 0 1px 1px #cfcfcf;
-  @include transition(border);
-
-  display: inline-block;
-
-  font {
-    style: normal;
-    size: 12px;
-  }
-  color: #505050;
-
-  padding: 4px 9px;
-
-  min-height: 10px;
-
-  border: 1px solid;
-
-  cursor: pointer;
-  white-space: normal;
-
-  &:hover {
-    @include button-gradient-hover-no-saturation($light-grey);
-    color: #505050;
-    text-decoration: none;
-    border: 1px solid;
   }
 }
 
