@@ -51,6 +51,8 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Improve ignored users styling [#6349](https://github.com/diaspora/diaspora/pull/6349)
 * Use Blueimp image gallery instead of lightbox [#6301](https://github.com/diaspora/diaspora/6301)
 * Unify mobile and desktop header design [#6285](https://github.com/diaspora/diaspora/6285)
+* Add white background and box-shadow to stream elements [#6324](https://github.com/diaspora/diaspora/6324)
+* Override Bootstrap list group design [#6345](https://github.com/diaspora/diaspora/6345)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -80,6 +82,8 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Show spinner on initial stream load [#6384](https://github.com/diaspora/diaspora/pull/6384)
 * Add new moderator role. Moderators can view and act on reported posts [#6351](https://github.com/diaspora/diaspora/pull/6351)
 * Only post to the primary tumblr blog [#6386](https://github.com/diaspora/diaspora/pull/6386)
+* Always show public photos on profile page [#6398](https://github.com/diaspora/diaspora/pull/6398)
+* Expose Unicorn's pid option to our configuration system [#6411](https://github.com/diaspora/diaspora/pull/6411)
 
 # 0.5.3.1
 
