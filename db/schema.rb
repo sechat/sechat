@@ -137,15 +137,6 @@ ActiveRecord::Schema.define(version: 20150828132451) do
 
   add_index "conversations", ["author_id"], name: "conversations_author_id_fk", using: :btree
 
-  create_table "donations", force: :cascade do |t|
-    t.string   "user_id",    limit: 255
-    t.string   "comment",    limit: 255,                null: false
-    t.float    "amount",     limit: 24,  default: 0.0
-    t.boolean  "anonymous",              default: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-  end
-
   create_table "invitation_codes", force: :cascade do |t|
     t.string   "token",      limit: 255
     t.integer  "user_id",    limit: 4
