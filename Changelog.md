@@ -53,6 +53,9 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Unify mobile and desktop header design [#6285](https://github.com/diaspora/diaspora/6285)
 * Add white background and box-shadow to stream elements [#6324](https://github.com/diaspora/diaspora/6324)
 * Override Bootstrap list group design [#6345](https://github.com/diaspora/diaspora/6345)
+* Clean up publisher code [#6336](https://github.com/diaspora/diaspora/6336)
+* Port conversations to new design [#6431](https://github.com/diaspora/diaspora/pull/6431)
+* Hide cancel button in publisher on small screens [#6435](https://github.com/diaspora/diaspora/pull/6435)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -60,6 +63,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Capitalize "Powered by diaspora" [#6254](https://github.com/diaspora/diaspora/pull/6254)
 * Display username and avatar for NSFW posts in mobile view [#6245](https://github.com/diaspora/diaspora/6245)
 * Prevent multiple comment boxes on mobile [#6363](https://github.com/diaspora/diaspora/pull/6363)
+* Correctly display location in post preview [#6429](https://github.com/diaspora/diaspora/pull/6429)
 
 ## Features
 * Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
@@ -72,6 +76,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Bigger mobile publisher [#6261](https://github.com/diaspora/diaspora/pull/6261)
 * Backend information panel & health checks for known pods [#6290](https://github.com/diaspora/diaspora/pull/6290)
 * Allow users to view a posts locations on an OpenStreetMap [#6256](https://github.com/diaspora/diaspora/pull/6256)
+* Redesign and unify error pages [#6428](https://github.com/diaspora/diaspora/pull/6428)
 
 # 0.5.4.0
 
