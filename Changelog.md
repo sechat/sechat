@@ -56,6 +56,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Clean up publisher code [#6336](https://github.com/diaspora/diaspora/6336)
 * Port conversations to new design [#6431](https://github.com/diaspora/diaspora/pull/6431)
 * Hide cancel button in publisher on small screens [#6435](https://github.com/diaspora/diaspora/pull/6435)
+* Replace mobile background with color [#6415](https://github.com/diaspora/diaspora/pull/6415)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -77,10 +78,12 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Backend information panel & health checks for known pods [#6290](https://github.com/diaspora/diaspora/pull/6290)
 * Allow users to view a posts locations on an OpenStreetMap [#6256](https://github.com/diaspora/diaspora/pull/6256)
 * Redesign and unify error pages [#6428](https://github.com/diaspora/diaspora/pull/6428)
+* Redesign and refactor report admin interface [#6378](https://github.com/diaspora/diaspora/pull/6378)
 
 # 0.5.4.0
 
 ## Refactor
+*  Improve infinite scroll triggering [#6451](https://github.com/diaspora/diaspora/pull/6451)
 
 ## Bug fixes
 
