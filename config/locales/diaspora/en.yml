@@ -1332,6 +1332,11 @@ en:
 
     activity:
       title: "My activity"
+
+    favors:
+      title: "Favorites"
+      contacts_title: "People whose posts you favored"
+
   users:
     edit:
       edit_account: "Edit account"

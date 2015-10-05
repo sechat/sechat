@@ -26,6 +26,7 @@ app.Router = Backbone.Router.extend({
     "aspects/stream": "aspects_stream",
     "commented": "stream",
     "liked": "stream",
+    "favors": "stream",
     "mentions": "stream",
     "followed_tags": "followed_tags",
     "tags/:name": "followed_tags",
