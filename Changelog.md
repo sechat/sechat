@@ -79,6 +79,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Allow users to view a posts locations on an OpenStreetMap [#6256](https://github.com/diaspora/diaspora/pull/6256)
 * Redesign and unify error pages [#6428](https://github.com/diaspora/diaspora/pull/6428)
 * Redesign and refactor report admin interface [#6378](https://github.com/diaspora/diaspora/pull/6378)
+* Add permalink icon to stream elements [#6457](https://github.com/diaspora/diaspora/pull/6457)
 
 # 0.5.4.0
 
@@ -86,6 +87,10 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 *  Improve infinite scroll triggering [#6451](https://github.com/diaspora/diaspora/pull/6451)
 
 ## Bug fixes
+* Skip first getting started step if it looks done already [#6456](https://github.com/diaspora/diaspora/pull/6456)
+* Normalize new followed tags and insert them alphabetically [#6454](https://github.com/diaspora/diaspora/pull/6454)
+* Add avatar fallback for notification dropdown [#6463](https://github.com/diaspora/diaspora/pull/6463)
+* Improve handling of j/k hotkeys [#6462](https://github.com/diaspora/diaspora/pull/6462)
 
 ## Features
 * Show spinner on initial stream load [#6384](https://github.com/diaspora/diaspora/pull/6384)
@@ -93,6 +98,8 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Only post to the primary tumblr blog [#6386](https://github.com/diaspora/diaspora/pull/6386)
 * Always show public photos on profile page [#6398](https://github.com/diaspora/diaspora/pull/6398)
 * Expose Unicorn's pid option to our configuration system [#6411](https://github.com/diaspora/diaspora/pull/6411)
+* Add stream of all public posts [#6465](https://github.com/diaspora/diaspora/pull/6465)
+* Reload stream when clicking on already active one [#6466](https://github.com/diaspora/diaspora/pull/6466)
 
 # 0.5.3.1
 

@@ -1,6 +1,6 @@
 @import 'perfect-scrollbar';
 
-@import "colors";
+@import 'color-variables';
 @import "bootstrap-complete.scss";
 @import 'mixins';
 
@@ -15,26 +15,27 @@
 @import 'sprites';
 @import 'hovercard';
 @import 'base';
-@import 'new_styles/interactions';
+@import 'interactions';
 @import 'spinner';
 @import 'timeago';
 @import 'vendor/fileuploader';
 @import 'vendor/autoSuggest';
 @import 'typeahead';
+@import 'colors';
 
 /* font overrides */
 @import 'typography';
 
 /* login */
-@import 'new_styles/login';
-@import 'new_styles/registration';
-@import 'new_styles/forms';
+@import 'login';
+@import 'registration';
+@import 'forms';
 
 /* terms */
 @import 'terms';
 
 /* profile and settings pages */
-@import 'new_styles/settings';
+@import 'settings';
 
 /* new SPV */
 @import 'header';
