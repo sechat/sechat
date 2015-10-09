@@ -882,7 +882,7 @@ DEPENDENCIES
   rails (= 4.2.4)
   rails-assets-autosize (= 3.0.13)!
   rails-assets-blueimp-gallery (= 2.16.0)!
-  rails-assets-diaspora_jsxc (~> 0.1.4.develop.2)!
+  rails-assets-diaspora_jsxc (~> 0.1.4.develop)!
   rails-assets-highlightjs (= 8.8.0)!
   rails-assets-jakobmattsson--jquery-elastic (= 1.6.11)!
   rails-assets-jasmine-ajax (= 3.2.0)!
