@@ -144,13 +144,6 @@ ActiveRecord::Schema.define(version: 20151006083356) do
 
   add_index "conversations", ["author_id"], name: "conversations_author_id_fk", using: :btree
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", limit: 4, null: false
-    t.integer "post_id", limit: 4, null: false
-  end
-
-  add_index "favorites", ["user_id", "post_id"], name: "index_favorites_on_user_id_and_post_id", unique: true, using: :btree
-
   create_table "invitation_codes", force: :cascade do |t|
     t.string   "token",      limit: 255
     t.integer  "user_id",    limit: 4
@@ -443,8 +436,8 @@ ActiveRecord::Schema.define(version: 20151006083356) do
     t.datetime "updated_at",                                        null: false
     t.string   "location",         limit: 255
     t.string   "full_name",        limit: 70
-    t.boolean  "nsfw",                           default: false
-    t.boolean  "public_details",                 default: false
+    t.boolean  "nsfw",                              default: false
+    t.boolean  "public_details",                    default: false
   end
 
   add_index "profiles", ["full_name", "searchable"], name: "index_profiles_on_full_name_and_searchable", using: :btree
