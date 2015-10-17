@@ -57,6 +57,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Port conversations to new design [#6431](https://github.com/diaspora/diaspora/pull/6431)
 * Hide cancel button in publisher on small screens [#6435](https://github.com/diaspora/diaspora/pull/6435)
 * Replace mobile background with color [#6415](https://github.com/diaspora/diaspora/pull/6415)
+* Port flash messages to backbone [#6395](https://github.com/diaspora/diaspora/6395)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -80,6 +81,19 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Redesign and unify error pages [#6428](https://github.com/diaspora/diaspora/pull/6428)
 * Redesign and refactor report admin interface [#6378](https://github.com/diaspora/diaspora/pull/6378)
 * Add permalink icon to stream elements [#6457](https://github.com/diaspora/diaspora/pull/6457)
+* Move reshare count to interactions for stream elements [#6487](https://github.com/diaspora/diaspora/pull/6487)
+
+# 0.5.5.0
+
+## Refactor
+
+## Bug fixes
+* Redirect to sign in page when a background request fails with 401 [#6496](https://github.com/diaspora/diaspora/pull/6496)
+* Correctly skip setting sidekiq logfile on Heroku [#6500](https://github.com/diaspora/diaspora/pull/6500)
+* Fix notifications for interactions by non-contacts [#6498](https://github.com/diaspora/diaspora/pull/6498)
+* Fix issue where the publisher was broken on profile pages [#6503](https://github.com/diaspora/diaspora/pull/6503)
+
+## Features
 
 # 0.5.4.0
 
@@ -91,6 +105,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Normalize new followed tags and insert them alphabetically [#6454](https://github.com/diaspora/diaspora/pull/6454)
 * Add avatar fallback for notification dropdown [#6463](https://github.com/diaspora/diaspora/pull/6463)
 * Improve handling of j/k hotkeys [#6462](https://github.com/diaspora/diaspora/pull/6462)
+* Fix JS error caused by hovercards [6480](https://github.com/diaspora/diaspora/pull/6480)
 
 ## Features
 * Show spinner on initial stream load [#6384](https://github.com/diaspora/diaspora/pull/6384)
@@ -100,6 +115,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 * Expose Unicorn's pid option to our configuration system [#6411](https://github.com/diaspora/diaspora/pull/6411)
 * Add stream of all public posts [#6465](https://github.com/diaspora/diaspora/pull/6465)
 * Reload stream when clicking on already active one [#6466](https://github.com/diaspora/diaspora/pull/6466)
+* Sign in user before evaluating post visibility [#6490](https://github.com/diaspora/diaspora/pull/6490)
 
 # 0.5.3.1
 

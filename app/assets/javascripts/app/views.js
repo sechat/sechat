@@ -53,6 +53,9 @@ app.views.Base = Backbone.View.extend({
     // add avatar fallback if it can't be loaded
     this.$el.find(this.avatars.selector).error(this.avatars.fallback);
 
+    // add placeholder support for old browsers
+    this.$("input, textarea").placeholder();
+
     this.postRenderTemplate();
   },
 
@@ -134,16 +137,10 @@ app.views.Base = Backbone.View.extend({
     var report = new app.models.Report();
     report.save(data, {
       success: function() {
-        Diaspora.page.flashMessages.render({
-          success: true,
-          notice: Diaspora.I18n.t('report.status.created')
-        });
+        app.flashMessages.success(Diaspora.I18n.t("report.status.created"));
       },
       error: function() {
-        Diaspora.page.flashMessages.render({
-          success: false,
-          notice: Diaspora.I18n.t('report.status.exists')
-        });
+        app.flashMessages.error(Diaspora.I18n.t("report.status.exists"));
       }
     });
   },
@@ -153,21 +150,17 @@ app.views.Base = Backbone.View.extend({
   destroyModel: function(evt) {
     evt && evt.preventDefault();
     var self = this;
-    var url = this.model.urlRoot + '/' + this.model.id;
+    var url = this.model.urlRoot + "/" + this.model.id;
 
     if( confirm(_.result(this, "destroyConfirmMsg")) ) {
-      this.$el.addClass('deleting');
+      this.$el.addClass("deleting");
       this.model.destroy({ url: url })
         .done(function() {
           self.remove();
         })
         .fail(function() {
-          self.$el.removeClass('deleting');
-          var flash = new Diaspora.Widgets.FlashMessages();
-          flash.render({
-            success: false,
-            notice: Diaspora.I18n.t('failed_to_remove')
-          });
+          self.$el.removeClass("deleting");
+          app.flashMessages.error(Diaspora.I18n.t("failed_to_remove"));
         });
     }
   },

@@ -14,13 +14,6 @@ describe("app.views.CommentStream", function(){
   });
 
   describe("postRenderTemplate", function(){
-    it("applies infield labels", function(){
-      spyOn($.fn, "placeholder");
-      this.view.postRenderTemplate();
-      expect($.fn.placeholder).toHaveBeenCalled();
-      expect($.fn.placeholder.calls.mostRecent().object.selector).toBe("textarea");
-    });
-
     it("autoResizes the new comment textarea", function(){
       spyOn(window, "autosize");
       this.view.postRenderTemplate();
@@ -32,6 +25,8 @@ describe("app.views.CommentStream", function(){
   describe("createComment", function() {
     beforeEach(function() {
       this.view.render();
+      this.view.$el.append($("<div id='flash-container'/>"));
+      app.flashMessages = new app.views.FlashMessages({ el: this.view.$("#flash-container") });
       this.view.expandComments();
     });
 
@@ -59,7 +54,7 @@ describe("app.views.CommentStream", function(){
         this.request.respondWith({status: 500});
 
         expect(this.view.$(".comment-content p").text()).not.toEqual("a new comment");
-        expect($('*[id^="flash"]')).toBeErrorFlashMessage("posting failed!");
+        expect(this.view.$(".flash-message")).toBeErrorFlashMessage("posting failed!");
       });
     });
 
