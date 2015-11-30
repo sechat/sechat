@@ -64,6 +64,11 @@ module UserCukeHelpers
     find("#user_menu li:last-child a").click
   end
 
+  def manual_logout_mobile
+    find("#menu-badge").click
+    find("#drawer ul li:last-child a").click
+  end
+
   def fill_in_new_user_form
     @username = "ohai"
     fill_in('user_username', with: @username)
@@ -93,14 +98,14 @@ module UserCukeHelpers
     find("#new_user input.btn").click
   end
 
-  # fill the reset password form
-  def fill_reset_password_form(new_pass, confirm_pass)
+  # fill the password reset form
+  def fill_password_reset_form(new_pass, confirm_pass)
     fill_in 'user_password', :with => new_pass
     fill_in 'user_password_confirmation', :with => confirm_pass
   end
 
-  # submit reset password form
-  def submit_reset_password_form
+  # submit the password reset form
+  def submit_password_reset_form
     find(".btn").click
   end
 
