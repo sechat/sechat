@@ -2,4 +2,6 @@
 
 [<%= t('.reply_to_or_view') %>][1]
 
+<pre><%= private_message_encrypted(@notification.conversation) %><pre>
+
 [1]: <%= conversations_url(:conversation_id => @notification.conversation) %>

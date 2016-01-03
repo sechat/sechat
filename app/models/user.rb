@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
 
   has_one :person, :foreign_key => :owner_id
   has_one :profile, through: :person
+  has_one :email_pgp_key, :foreign_key => :owner_id
 
   delegate :guid, :public_key, :posts, :photos, :owns?, :image_url,
            :diaspora_handle, :name, :atom_url, :profile_url, :profile, :url,

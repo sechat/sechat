@@ -52,6 +52,12 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def last_unread_message(user)
+    if visibility = self.conversation_visibilities.where(:person_id => user.person.id).where('unread > 0').first
+      self.messages.to_a[visibility.unread]
+    end
+  end
+
   def set_read(user)
     if visibility = self.conversation_visibilities.where(:person_id => user.person.id).first
       visibility.unread = 0

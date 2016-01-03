@@ -44,7 +44,7 @@ class UsersController < ApplicationController
         if @user.update_attributes(u)
           flash[:notice] = I18n.t 'users.update.settings_updated'
         else
-          flash[:notice] = I18n.t 'users.update.settings_not_updated'
+          flash[:error] = I18n.t 'users.update.settings_not_updated'
         end
       elsif u[:language]
         if @user.update_attributes(u)

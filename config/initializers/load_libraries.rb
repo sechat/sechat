@@ -8,6 +8,7 @@ require 'carrierwave/orm/activerecord'
 require 'erb'
 require 'redcarpet/render_strip'
 require 'typhoeus'
+require 'gpgme'
 
 # Our libs
 require 'diaspora'

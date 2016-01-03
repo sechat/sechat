@@ -121,6 +121,8 @@ Diaspora::Application.routes.draw do
     get 'confirm_email/:token'      => :confirm_email,    :as => 'confirm_email'
   end
 
+  put 'privacy' => 'privacy#update', :as => 'privacy'
+
   # This is a hack to overide a route created by devise.
   # I couldn't find anything in devise to skip that route, see Bug #961
   get 'users/edit' => redirect('/user/edit')

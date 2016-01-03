@@ -23,6 +23,26 @@
     .row
       .col-md-12
         %h3
+          = t('.pgp_encryption')
+
+        = form_for current_user, url: privacy_path, html: {method: :put} do |f|
+          = f.error_messages
+
+          = f.fields_for :stream_preferences do
+            %p
+              = t('.pgp_label')
+
+            - pgp = current_user.email_pgp_key
+            = text_area_tag 'key', (pgp ? pgp.key : ''),
+              rows: 5, placeholder: t('fill_me_out'), class: 'form-control'
+            %p.pull-left
+              = t('.pgp_label2')
+            = f.submit t("users.edit.change"), class: "btn btn-primary pull-right"
+    %hr
+
+    .row
+      .col-md-12
+        %h3
           = t(".ignored_users")
 
         - if @blocks.length.zero?

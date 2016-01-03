@@ -88,8 +88,11 @@ class Notifier < ActionMailer::Base
   end
 
   private
-  def send_notification(type, *args)
-    @notification = NotificationMailers.const_get(type.to_s.camelize).new(*args)
+  def send_notification(type, recipient_id, *args)
+    @recipient_id = recipient_id
+    @notification = NotificationMailers
+      .const_get(type.to_s.camelize)
+      .new(recipient_id, *args)
 
     with_recipient_locale do
       mail(@notification.headers) do |format|

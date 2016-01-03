@@ -157,6 +157,9 @@ gem "active_model_serializers", "0.9.3"
 gem "diaspora-vines",             "~> 0.2.0.develop"
 gem "rails-assets-diaspora_jsxc", "~> 0.1.5.develop", source: "https://rails-assets.org"
 
+# Email encryption
+gem "gpgme"
+
 # Tags
 
 gem "acts-as-taggable-on", "3.5.0"

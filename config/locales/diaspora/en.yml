@@ -1392,6 +1392,9 @@ en:
 
     privacy_settings:
       title: "Privacy settings"
+      pgp_encryption: "Email PGP encryption"
+      pgp_label: "If you prefer encrypted email communication. Paste your public PGP-key into the textarea."
+      pgp_label2: "Deactivate it by removing the key and hit the submit button!"
       strip_exif: "Strip metadata such as location, author, and camera model from uploaded images (recommended)"
       ignored_users: "Ignored users"
       stop_ignoring: "Stop ignoring"
