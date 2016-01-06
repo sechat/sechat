@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006083356) do
+ActiveRecord::Schema.define(version: 20160104200647) do
 
   create_table "account_deletions", force: :cascade do |t|
     t.string   "diaspora_handle", limit: 255
@@ -143,6 +143,13 @@ ActiveRecord::Schema.define(version: 20151006083356) do
   end
 
   add_index "conversations", ["author_id"], name: "conversations_author_id_fk", using: :btree
+
+  create_table "email_pgp_keys", force: :cascade do |t|
+    t.integer "owner_id",    limit: 4
+    t.text    "key",         limit: 65535
+    t.boolean "enabled",                   default: false
+    t.text    "fingerprint", limit: 255
+  end
 
   create_table "invitation_codes", force: :cascade do |t|
     t.string   "token",      limit: 255
