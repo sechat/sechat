@@ -78,6 +78,10 @@ class User < ActiveRecord::Base
   has_many :reports
   has_many :bookmarks
 
+  has_many :pairwise_pseudonymous_identifiers, class_name: "Api::OpenidConnect::PairwisePseudonymousIdentifier"
+  has_many :authorizations, class_name: "Api::OpenidConnect::Authorization"
+  has_many :o_auth_applications, through: :authorizations, class_name: "Api::OpenidConnect::OAuthApplication"
+
   before_save :guard_unconfirmed_email,
               :save_person!
 
@@ -603,12 +607,10 @@ class User < ActiveRecord::Base
   private
 
   def clearable_fields
-    self.attributes.keys - ["id", "username", "encrypted_password",
-                            "created_at", "updated_at", "locked_at",
-                            "serialized_private_key", "getting_started",
-                            "disable_mail", "show_community_spotlight_in_stream",
-                            "strip_exif", "email", "remove_after",
-                            "export", "exporting", "exported_at",
-                            "exported_photos_file", "exporting_photos", "exported_photos_at"]
+    attributes.keys - %w(id username encrypted_password created_at updated_at locked_at
+                         serialized_private_key getting_started
+                         disable_mail show_community_spotlight_in_stream
+                         strip_exif email remove_after export exporting exported_at
+                         exported_photos_file exporting_photos exported_photos_at)
   end
 end

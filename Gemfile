@@ -12,7 +12,7 @@ gem "unicorn", "5.0.1", require: false
 
 # Federation
 
-gem "diaspora_federation-rails", "0.0.10"
+gem "diaspora_federation-rails", "0.0.11"
 
 # API and JSON
 
@@ -149,6 +149,9 @@ gem "omniauth-twitter",   "1.2.1"
 gem "twitter",            "5.15.0"
 gem "omniauth-wordpress", "0.2.2"
 
+# OpenID Connect
+gem "openid_connect", "0.8.3"
+
 # Serializers
 
 gem "active_model_serializers", "0.9.3"
@@ -194,6 +197,8 @@ gem "rubyzip", "1.1.7"
 # https://github.com/gitlabhq/gitlabhq/pull/3852
 # https://github.com/discourse/discourse/pull/238
 gem "minitest"
+
+gem "versionist", "1.4.1"
 
 # Windows and OSX have an execjs compatible runtime built-in, Linux users should
 # install Node.js or use "therubyracer".
@@ -279,6 +284,9 @@ group :test do
   gem "database_cleaner" ,  "1.5.1"
   gem "selenium-webdriver", "2.47.1"
 
+  gem "cucumber-api-steps", "0.13", require: false
+  gem "json_spec", "1.1.4"
+
   # General helpers
 
   gem "factory_girl_rails", "4.5.0"
@@ -286,7 +294,7 @@ group :test do
   gem "webmock",            "1.22.3", require: false
   gem "shoulda-matchers",   "3.0.1"
 
-  gem "diaspora_federation-test", "0.0.10"
+  gem "diaspora_federation-test", "0.0.11"
 end
 
 group :development, :test do

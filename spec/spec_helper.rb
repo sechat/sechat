@@ -59,6 +59,29 @@ def photo_fixture_name
   @photo_fixture_name = File.join(File.dirname(__FILE__), "fixtures", "button.png")
 end
 
+def jwks_file_path
+  @jwks_file = File.join(File.dirname(__FILE__), "fixtures", "jwks.json")
+end
+
+def valid_client_assertion_path
+  @valid_client_assertion = File.join(File.dirname(__FILE__), "fixtures", "valid_client_assertion.txt")
+end
+
+def client_assertion_with_tampered_sig_path
+  @client_assertion_with_tampered_sig = File.join(File.dirname(__FILE__), "fixtures",
+                                                  "client_assertion_with_tampered_sig.txt")
+end
+
+def client_assertion_with_nonexistent_kid_path
+  @client_assertion_with_nonexistent_kid = File.join(File.dirname(__FILE__), "fixtures",
+                                                     "client_assertion_with_nonexistent_kid.txt")
+end
+
+def client_assertion_with_nonexistent_client_id_path
+  @client_assertion_with_nonexistent_client_id = File.join(File.dirname(__FILE__), "fixtures",
+                                                           "client_assertion_with_nonexistent_client_id.txt")
+end
+
 # Force fixture rebuild
 FileUtils.rm_f(Rails.root.join("tmp", "fixture_builder.yml"))
 
@@ -72,6 +95,8 @@ require fixture_builder_file
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.mock_with :rspec
+
+  config.example_status_persistence_file_path = "tmp/rspec-persistance.txt"
 
   config.render_views
   config.use_transactional_fixtures = true
