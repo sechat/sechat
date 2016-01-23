@@ -68,6 +68,7 @@ Contributions are very welcome, the hard work is done!
 * Replace mobile background with color [#6415](https://github.com/diaspora/diaspora/pull/6415)
 * Port flash messages to backbone [#6395](https://github.com/diaspora/diaspora/6395)
 * Change login/registration/forgot password button color [#6504](https://github.com/diaspora/diaspora/pull/6504)
+* A note regarding ignoring users was added to the failure messages on commenting/liking [#6646](https://github.com/diaspora/diaspora/pull/6646)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -79,6 +80,7 @@ Contributions are very welcome, the hard work is done!
 * Do not fail when submitting an empty comment in the mobile view [#6543](https://github.com/diaspora/diaspora/pull/6543)
 * Limit flash message width on small devices [#6529](https://github.com/diaspora/diaspora/pull/6529)
 * Add navbar on mobile when not logged in [#6483](https://github.com/diaspora/diaspora/pull/6483)
+*  Fix timeago tooltips for reshares [#6648](https://github.com/diaspora/diaspora/pull/6648)
 
 ## Features
 * Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
@@ -100,8 +102,19 @@ Contributions are very welcome, the hard work is done!
 
 # 0.5.7.0
 
-# Bug fixes
-Fix plural rules handling more than wanted as "one" [#6630](https://github.com/diaspora/diaspora/pull/6630)
+## Refactor
+* Internationalize controller rescue\_from text [#6554](https://github.com/diaspora/diaspora/pull/6554)
+
+## Bug fixes
+* Fix plural rules handling more than wanted as "one" [#6630](https://github.com/diaspora/diaspora/pull/6630)
+
+## Features
+* Keyboard shortcuts now do work on profile pages as well [#6647](https://github.com/diaspora/diaspora/pull/6647/files)
+
+# 0.5.6.1
+
+* Fix Nokogiri CVE-2015-7499
+* Fix unsafe "Remember me" cookies in Devise
 
 # 0.5.6.0
 
