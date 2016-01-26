@@ -26,6 +26,14 @@ changed. diaspora\* will no longer listen on `0.0.0.0:3000` as it will now
 bind to an UNIX socket at `unix:tmp/diaspora.sock`. Please change your local
 `diaspora.yml` if necessary.
 
+## Redis namespace support dropped
+
+We dropped support for Redis namespaces in this release. If you previously set
+a custom namespace, please note that diaspora\* will no longer use the
+configured value. By default, Redis supports up to 8 databases which can be
+selected via the Redis URL in `diaspora.yml`. Please check the examples
+provided in our configuration example file.
+
 ## Terms of Use design changes
 
 With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. If you have created a customised app/views/terms/terms.haml or app/views/terms/terms.erb file, you will need to edit those files to base your customisations on the new default.haml file.
@@ -69,6 +77,7 @@ Contributions are very welcome, the hard work is done!
 * Port flash messages to backbone [#6395](https://github.com/diaspora/diaspora/6395)
 * Change login/registration/forgot password button color [#6504](https://github.com/diaspora/diaspora/pull/6504)
 * A note regarding ignoring users was added to the failure messages on commenting/liking [#6646](https://github.com/diaspora/diaspora/pull/6646)
+* Replace sidetiq with sidekiq-cron [#6616](https://github.com/diaspora/diaspora/pull/6616)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -107,9 +116,27 @@ Contributions are very welcome, the hard work is done!
 
 ## Bug fixes
 * Fix plural rules handling more than wanted as "one" [#6630](https://github.com/diaspora/diaspora/pull/6630)
+* Fix `suppress_annoying_errors` eating too much errors [#6653](https://github.com/diaspora/diaspora/pull/6653)
 
 ## Features
 * Keyboard shortcuts now do work on profile pages as well [#6647](https://github.com/diaspora/diaspora/pull/6647/files)
+* Add the podmin email address to 500 errors [#6652](https://github.com/diaspora/diaspora/pull/6652)
+
+# 0.5.6.3
+
+Fix evil regression caused by Active Model no longer exposing
+`include_root_in_json` in instances.
+
+# 0.5.6.2
+
+* Fix [CVE-2016-0751](https://groups.google.com/forum/#!topic/rubyonrails-security/9oLY_FCzvoc) - Possible Object Leak and Denial of Service attack in Action Pack
+* Fix [CVE-2015-7581](https://groups.google.com/forum/#!topic/rubyonrails-security/dthJ5wL69JE) - Object leak vulnerability for wildcard controller routes in Action Pack
+* Fix [CVE-2015-7576](https://groups.google.com/forum/#!topic/rubyonrails-security/ANv0HDHEC3k) - Timing attack vulnerability in basic authentication in Action Controller
+* Fix [CVE-2016-0752](https://groups.google.com/forum/#!topic/rubyonrails-security/335P1DcLG00) - Possible Information Leak Vulnerability in Action View
+* Fix [CVE-2016-0753](https://groups.google.com/forum/#!topic/rubyonrails-security/6jQVC1geukQ) - Possible Input Validation Circumvention in Active Model
+* Fix [CVE-2015-7577](https://groups.google.com/forum/#!topic/rubyonrails-security/cawsWcQ6c8g) - Nested attributes rejection proc bypass in Active Record
+* Fix [CVE-2015-7579](https://groups.google.com/forum/#!topic/rubyonrails-security/OU9ugTZcbjc) - XSS vulnerability in rails-html-sanitizer
+* Fix [CVE-2015-7578](https://groups.google.com/forum/#!topic/rubyonrails-security/uh--W4TDwmI) - Possible XSS vulnerability in rails-html-sanitizer
 
 # 0.5.6.1
 

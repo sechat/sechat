@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "4.2.5"
+gem "rails", "4.2.5.1"
 
 # Legacy Rails features, remove me!
 # responders (class level)
@@ -12,7 +12,7 @@ gem "unicorn", "5.0.1", require: false
 
 # Federation
 
-gem "diaspora_federation-rails", "0.0.11"
+gem "diaspora_federation-rails", "0.0.12"
 
 # API and JSON
 
@@ -32,12 +32,12 @@ gem "simple_captcha2", "0.3.4", require: "simple_captcha"
 
 # Background processing
 
-gem "sidekiq", "3.4.2"
+gem "sidekiq", "4.0.1"
 gem "sinatra", "1.4.6"
 
 # Scheduled processing
 
-gem "sidetiq", "0.6.3"
+gem "sidekiq-cron", "0.4.1"
 
 # Compression
 
@@ -294,7 +294,7 @@ group :test do
   gem "webmock",            "1.22.3", require: false
   gem "shoulda-matchers",   "3.0.1"
 
-  gem "diaspora_federation-test", "0.0.11"
+  gem "diaspora_federation-test", "0.0.12"
 end
 
 group :development, :test do
