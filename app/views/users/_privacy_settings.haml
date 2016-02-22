@@ -1,54 +1,48 @@
 .row
-  .col-lg-10.col-lg-offset-1
-    = render "shared/settings_nav"
+  .col-md-12
+    %h3
+      = t(".title")
+
+    = form_for current_user, url: user_path, html: {method: :put} do |f|
+      = f.error_messages
+
+      = f.fields_for :stream_preferences do
+        .checkbox#stream_prefs
+          = f.label :strip_exif do
+            = f.check_box :strip_exif
+            = t(".strip_exif")
+          = f.submit t("users.edit.change"), class: "btn btn-primary pull-right"
+%hr
 
 .row
-  .col-lg-8.col-lg-offset-2
-    .row
-      .col-md-12
-        %h3
-          = t(".title")
+  .col-md-12
+    %h3
+      = t('.pgp_encryption')
 
-        = form_for current_user, url: user_path, html: {method: :put} do |f|
-          = f.error_messages
+    = form_for current_user, url: privacy_path, html: {method: :put} do |f|
+      = f.error_messages
 
-          = f.fields_for :stream_preferences do
-            .checkbox#stream_prefs
-              = f.label :strip_exif do
-                = f.check_box :strip_exif
-                = t(".strip_exif")
-              = f.submit t("users.edit.change"), class: "btn btn-primary pull-right"
-    %hr
+      = f.fields_for :stream_preferences do
+        %p
+          = t('.pgp_label')
 
-    .row
-      .col-md-12
-        %h3
-          = t('.pgp_encryption')
+        - pgp = current_user.email_pgp_key
+        = text_area_tag 'key', (pgp ? pgp.key : ''),
+          rows: 5, placeholder: t('fill_me_out'), class: 'form-control'
+        %p.pull-left
+          = t('.pgp_label2')
+        = f.submit t("users.edit.change"), class: "btn btn-primary pull-right"
+%hr
 
-        = form_for current_user, url: privacy_path, html: {method: :put} do |f|
-          = f.error_messages
+.row
+  .col-md-12
+    %h3
+      = t(".ignored_users")
 
-          = f.fields_for :stream_preferences do
-            %p
-              = t('.pgp_label')
-
-            - pgp = current_user.email_pgp_key
-            = text_area_tag 'key', (pgp ? pgp.key : ''),
-              rows: 5, placeholder: t('fill_me_out'), class: 'form-control'
-            %p.pull-left
-              = t('.pgp_label2')
-            = f.submit t("users.edit.change"), class: "btn btn-primary pull-right"
-    %hr
-
-    .row
-      .col-md-12
-        %h3
-          = t(".ignored_users")
-
-        - if @blocks.length.zero?
-          %p
-            = t(".no_user_ignored_message")
-        - else
-          #blocked_people
-            - @blocks.each do |block|
-              = render partial: "blocked_person", locals: {block: block, person: block.person}
+    - if @blocks.length.zero?
+      %p
+        = t(".no_user_ignored_message")
+    - else
+      #blocked_people
+        - @blocks.each do |block|
+          = render partial: "blocked_person", locals: {block: block, person: block.person}

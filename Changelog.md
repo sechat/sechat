@@ -41,7 +41,7 @@ With the port to Bootstrap 3, app/views/terms/default.haml has a new structure. 
 ## API authentication
 
 This release makes diaspora\* a OpenID Connect provider. This means you can authenticate to third parties with your diaspora\* account and let
-them act as your diaspora* account on your behalf. This feature is still considered in early development, we still expect edge cases and advanced
+them act as your diaspora\* account on your behalf. This feature is still considered in early development, we still expect edge cases and advanced
 features of the specificiation to not be handled correctly or be missing. But we expect a basic OpenID Connect compliant client to work. Please submit issues!
 We will also most likely still change the authorization scopes we offer and started with a very minimal set.
 Most work still required is on documentation as well as designing and implementing the data API for all of Diaspora's functionality.
@@ -78,6 +78,12 @@ Contributions are very welcome, the hard work is done!
 * Change login/registration/forgot password button color [#6504](https://github.com/diaspora/diaspora/pull/6504)
 * A note regarding ignoring users was added to the failure messages on commenting/liking [#6646](https://github.com/diaspora/diaspora/pull/6646)
 * Replace sidetiq with sidekiq-cron [#6616](https://github.com/diaspora/diaspora/pull/6616)
+* Refactor mobile comment section [#6509](https://github.com/diaspora/diaspora/pull/6509)
+* Set vertical resize as default for all textareas [#6654](https://github.com/diaspora/diaspora/pull/6654)
+* Unifiy max-widths and page layouts [#6675](https://github.com/diaspora/diaspora/pull/6675)
+* Enable autosizing for all textareas [#6674](https://github.com/diaspora/diaspora/pull/6674)
+* Stream faces are gone [#6686](https://github.com/diaspora/diaspora/pull/6686)
+* Refactor mobile javascript and add tests [#6394](https://github.com/diaspora/diaspora/pull/6394)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -89,7 +95,11 @@ Contributions are very welcome, the hard work is done!
 * Do not fail when submitting an empty comment in the mobile view [#6543](https://github.com/diaspora/diaspora/pull/6543)
 * Limit flash message width on small devices [#6529](https://github.com/diaspora/diaspora/pull/6529)
 * Add navbar on mobile when not logged in [#6483](https://github.com/diaspora/diaspora/pull/6483)
-*  Fix timeago tooltips for reshares [#6648](https://github.com/diaspora/diaspora/pull/6648)
+* Fix timeago tooltips for reshares [#6648](https://github.com/diaspora/diaspora/pull/6648)
+* "Getting started" is now turned off after first visit on mobile [#6681](https://github.com/diaspora/diaspora/pull/6681)
+* Fixed a 500 when liking on mobile without JS enabled [#6683](https://github.com/diaspora/diaspora/pull/6683)
+* Fixed profile image upload in the mobile UI [#6684](https://github.com/diaspora/diaspora/pull/6684)
+* Fixed eye not stopping all processes when trying to exit `script/server` [#6693](https://github.com/diaspora/diaspora/pull/6693)
 
 ## Features
 * Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
@@ -108,15 +118,35 @@ Contributions are very welcome, the hard work is done!
 * Move reshare count to interactions for stream elements [#6487](https://github.com/diaspora/diaspora/pull/6487)
 * Posts of ignored users are now visible on that profile page [#6617](https://github.com/diaspora/diaspora/pull/6617)
 * Add white color theme [#6631](https://github.com/diaspora/diaspora/pull/6631)
+* Add answer counts to poll [#6641](https://github.com/diaspora/diaspora/pull/6641)
+* Check for collapsible posts after images in posts have loaded [#6671](https://github.com/diaspora/diaspora/pull/6671)
+* Add reason for post report to email sent to admins [#6679](https://github.com/diaspora/diaspora/pull/6679)
+
+# 0.5.8.0
+
+## Refactor
+
+## Bug fixes
+* Fix empty name field when editing aspect names [#6706](https://github.com/diaspora/diaspora/pull/6706)
+* Fix internal server error when trying to log out of an expired session [#6707](https://github.com/diaspora/diaspora/pull/6707)
+
+## Features
 
 # 0.5.7.0
 
 ## Refactor
 * Internationalize controller rescue\_from text [#6554](https://github.com/diaspora/diaspora/pull/6554)
+* Make mention parsing a bit more robust [#6658](https://github.com/diaspora/diaspora/pull/6658)
+* Remove unlicensed images [#6673](https://github.com/diaspora/diaspora/pull/6673)
+* Removed unused contacts\_title [#6687](https://github.com/diaspora/diaspora/pull/6687)
 
 ## Bug fixes
 * Fix plural rules handling more than wanted as "one" [#6630](https://github.com/diaspora/diaspora/pull/6630)
 * Fix `suppress_annoying_errors` eating too much errors [#6653](https://github.com/diaspora/diaspora/pull/6653)
+* Ensure the rubyzip gem is properly loaded [#6659](https://github.com/diaspora/diaspora/pull/6659)
+* Fix mobile registration layout after failed registration [#6677](https://github.com/diaspora/diaspora/pull/6677)
+* Fix mirrored names when using a RTL language [#6680](https://github.com/diaspora/diaspora/pull/6680)
+* Disable submitting a post multiple times in the mobile UI [#6682](https://github.com/diaspora/diaspora/pull/6682)
 
 ## Features
 * Keyboard shortcuts now do work on profile pages as well [#6647](https://github.com/diaspora/diaspora/pull/6647/files)
