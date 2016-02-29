@@ -14,6 +14,9 @@ class PersonPresenter < BasePresenter
       block:             is_blocked? ? BlockPresenter.new(current_user_person_block).base_hash : false,
       contact:           (!own_profile? && has_contact?) ? {id: current_user_person_contact.id} : false,
       is_own_profile:    own_profile?,
+      profile_role_name: profile_role_name,
+      profile_role_exists: (!profile_role_name.nil?),
+      profile_role_label: profile_role_label,
       show_profile_info: public_details? || own_profile? || person_is_following_current_user
     )
   end
@@ -23,6 +26,18 @@ class PersonPresenter < BasePresenter
   end
 
   protected
+
+  def profile_role_name
+    roles = Role.where(person_id: profile.person_id)
+    return nil if roles.empty?
+    role = (roles.map {|r| r.name}.sort)[0]
+    role.capitalize
+  end
+
+  def profile_role_label
+    return nil if profile_role_name.nil?
+    profile_role_name.casecmp('admin') == 0 ? 'danger' : 'info'
+  end
 
   def own_profile?
     current_user.try(:person) == @presentable
