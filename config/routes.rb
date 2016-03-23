@@ -41,10 +41,7 @@ Diaspora::Application.routes.draw do
     resource :bookmarks, only: %i(create destroy)
   end
 
-
-
   get 'p/:id' => 'posts#show', :as => 'short_post'
-  get 'posts/:id/iframe' => 'posts#iframe', :as => 'iframe'
 
   # roll up likes into a nested resource above
   resources :comments, :only => [:create, :destroy] do

@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
   serialize :hidden_shareables, Hash
 
-  has_one :person, :foreign_key => :owner_id
+  has_one :person, inverse_of: :owner, foreign_key: :owner_id
   has_one :profile, through: :person
   has_one :email_pgp_key, :foreign_key => :owner_id
 
@@ -82,8 +82,9 @@ class User < ActiveRecord::Base
   has_many :authorizations, class_name: "Api::OpenidConnect::Authorization"
   has_many :o_auth_applications, through: :authorizations, class_name: "Api::OpenidConnect::OAuthApplication"
 
-  before_save :guard_unconfirmed_email,
-              :save_person!
+  has_many :share_visibilities
+
+  before_save :guard_unconfirmed_email
 
   def self.all_sharing_with_person(person)
     User.joins(:contacts).where(:contacts => {:person_id => person.id})
@@ -114,6 +115,10 @@ class User < ActiveRecord::Base
 
   def invitation_code
     InvitationCode.find_or_create_by(user_id: self.id)
+  end
+
+  def receive_shareable(shareable)
+    ShareVisibility.create!(shareable_id: shareable.id, shareable_type: shareable.class.base_class.to_s, user_id: id)
   end
 
   def hidden_shareables
@@ -456,7 +461,6 @@ class User < ActiveRecord::Base
   end
 
   def set_person(person)
-    person.url = AppConfig.pod_uri.to_s
     person.diaspora_handle = "#{self.username}#{User.diaspora_id_host}"
     self.person = person
   end
@@ -534,16 +538,6 @@ class User < ActiveRecord::Base
       self.person.serialized_public_key = OpenSSL::PKey::RSA.new(self.serialized_private_key).public_key.to_s
     end
   end
-
-  # Sometimes we access the person in a strange way and need to do this
-  # @note we should make this method depricated.
-  #
-  # @return [Person]
-  def save_person!
-    self.person.save if self.person && self.person.changed?
-    self.person
-  end
-
 
   def no_person_with_same_username
     diaspora_id = "#{self.username}#{User.diaspora_id_host}"

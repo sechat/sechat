@@ -1,5 +1,9 @@
 # 0.6.0.0
 
+## Warning: This release contains long migrations
+
+This diaspora\* releases comes with a few database cleanup migrations and they could possible take a while. While you should always do that, it is especially important this time to make sure you run the migrations inside a detachable environment like `screen` or `tmux`. A interrupted SSH session could possibly harm your database. Also, please make a backup.
+
 ## The DB environment variable is gone
 
 With Bundler 1.10 supporting optional groups, we removed the DB environment variable. When updating to this release, please update
@@ -84,6 +88,13 @@ Contributions are very welcome, the hard work is done!
 * Enable autosizing for all textareas [#6674](https://github.com/diaspora/diaspora/pull/6674)
 * Stream faces are gone [#6686](https://github.com/diaspora/diaspora/pull/6686)
 * Refactor mobile javascript and add tests [#6394](https://github.com/diaspora/diaspora/pull/6394)
+* Dropped `parent_author_signature` from relayables [#6586](https://github.com/diaspora/diaspora/pull/6586)
+* Attached ShareVisibilities to the User, not the Contact [#6723](https://github.com/diaspora/diaspora/pull/6723)
+* Refactor mentions input, now based on typeahead.js [#6728](https://github.com/diaspora/diaspora/pull/6728)
+* Optimized the pod up checks [#6727](https://github.com/diaspora/diaspora/pull/6727)
+* Prune and do not create aspect visibilities for public posts [#6732](https://github.com/diaspora/diaspora/pull/6732)
+* Optimized mobile login and registration forms [#6764](https://github.com/diaspora/diaspora/pull/6764)
+* Redesign stream pages [#6535](https://github.com/diaspora/diaspora/pull/6535)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -100,6 +111,8 @@ Contributions are very welcome, the hard work is done!
 * Fixed a 500 when liking on mobile without JS enabled [#6683](https://github.com/diaspora/diaspora/pull/6683)
 * Fixed profile image upload in the mobile UI [#6684](https://github.com/diaspora/diaspora/pull/6684)
 * Fixed eye not stopping all processes when trying to exit `script/server` [#6693](https://github.com/diaspora/diaspora/pull/6693)
+* Do not change contacts count when marking notifications on the contacts page as read [#6718](https://github.com/diaspora/diaspora/pull/6718)
+* Fix typeahead for non-latin characters [#6741](https://github.com/diaspora/diaspora/pull/6741)
 
 ## Features
 * Support color themes [#6033](https://github.com/diaspora/diaspora/pull/6033)
@@ -121,16 +134,28 @@ Contributions are very welcome, the hard work is done!
 * Add answer counts to poll [#6641](https://github.com/diaspora/diaspora/pull/6641)
 * Check for collapsible posts after images in posts have loaded [#6671](https://github.com/diaspora/diaspora/pull/6671)
 * Add reason for post report to email sent to admins [#6679](https://github.com/diaspora/diaspora/pull/6679)
+* Add links to the single post view of the related post to photos in the photo stream [#6621](https://github.com/diaspora/diaspora/pull/6621)
 
 # 0.5.8.0
 
 ## Refactor
+* Sort tag autocompletion by tag name [#6734](https://github.com/diaspora/diaspora/pull/6734)
 
 ## Bug fixes
 * Fix empty name field when editing aspect names [#6706](https://github.com/diaspora/diaspora/pull/6706)
 * Fix internal server error when trying to log out of an expired session [#6707](https://github.com/diaspora/diaspora/pull/6707)
+* Only mark unread notifications as read [#6711](https://github.com/diaspora/diaspora/pull/6711)
+* Use https for OEmbeds [#6748](https://github.com/diaspora/diaspora/pull/6748)
 
 ## Features
+* Added the footer to conversation pages [#6710](https://github.com/diaspora/diaspora/pull/6710)
+* Drop ChromeFrame and display an error page on old IE versions instead [#6751](https://github.com/diaspora/diaspora/pull/6751)
+
+# 0.5.7.1
+
+This security release disables post fetching for relayables. Due to an insecure implementation, fetching of root posts for relayables could allow an attacker to distribute malicious/spoofed/modified posts for any person.
+
+Disabling the fetching will make the current federation a bit less reliable, but for a hotfix, this is the best solution. We will re-enable the fetching in 0.6.0.0 when we moved out the federation into its own library and are able to implement further validation during fetches.
 
 # 0.5.7.0
 

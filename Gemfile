@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "4.2.5.1"
+gem "rails", "4.2.5.2"
 
 # Legacy Rails features, remove me!
 # responders (class level)
@@ -56,13 +56,13 @@ gem "rack-cors", "0.4.0", require: "rack/cors"
 gem "bootstrap-sass", "3.3.6"
 gem "compass-rails",  "2.0.5"
 gem "sass-rails",     "5.0.4"
-gem "autoprefixer-rails", "6.3.1"
+gem "autoprefixer-rails", "6.3.3.1"
 gem "bootstrap-switch-rails", "3.3.3"
 
 # Database
 
 group :mysql, optional: true do
-  gem "mysql2", "0.4.2"
+  gem "mysql2", "0.4.3"
 end
 group :postgresql, optional: true do
   gem "pg",     "0.18.4"
@@ -90,8 +90,8 @@ gem "backbone-on-rails", "1.2.0.0"
 gem "handlebars_assets", "0.23.0"
 gem "jquery-rails",      "4.1.0"
 gem "jquery-ui-rails",   "5.0.5"
-gem "js_image_paths",    "0.0.2"
-gem "js-routes",         "1.2.3"
+gem "js_image_paths",    "0.1.0"
+gem "js-routes",         "1.2.4"
 
 source "https://rails-assets.org" do
   gem "rails-assets-jquery",                              "1.12.0" # Should be kept in sync with jquery-rails
@@ -108,11 +108,9 @@ source "https://rails-assets.org" do
 
   # jQuery plugins
 
-  gem "rails-assets-jeresig--jquery.hotkeys",       "0.2.0"
   gem "rails-assets-jquery-placeholder",            "2.3.1"
   gem "rails-assets-jquery-textchange",             "0.2.3"
   gem "rails-assets-perfect-scrollbar",             "0.6.10"
-  gem "rails-assets-jakobmattsson--jquery-elastic", "1.6.11"
   gem "rails-assets-autosize",                      "3.0.15"
   gem "rails-assets-blueimp-gallery",               "2.17.0"
 end
@@ -178,7 +176,7 @@ gem "typhoeus",           "0.8.0"
 # Views
 
 gem "gon",                     "6.0.1"
-gem "haml",                    "4.0.7"
+gem "hamlit",                  "2.2.1"
 gem "mobile-fu",               "1.3.1"
 gem "will_paginate",           "3.1.0"
 gem "rails-timeago",           "2.11.0"
