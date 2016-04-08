@@ -95,6 +95,7 @@ Contributions are very welcome, the hard work is done!
 * Prune and do not create aspect visibilities for public posts [#6732](https://github.com/diaspora/diaspora/pull/6732)
 * Optimized mobile login and registration forms [#6764](https://github.com/diaspora/diaspora/pull/6764)
 * Redesign stream pages [#6535](https://github.com/diaspora/diaspora/pull/6535)
+* Improve search and mentions suggestions [#6788](https://github.com/diaspora/diaspora/pull/6788)
 
 ## Bug fixes
 * Destroy Participation when removing interactions with a post [#5852](https://github.com/diaspora/diaspora/pull/5852)
@@ -135,17 +136,28 @@ Contributions are very welcome, the hard work is done!
 * Check for collapsible posts after images in posts have loaded [#6671](https://github.com/diaspora/diaspora/pull/6671)
 * Add reason for post report to email sent to admins [#6679](https://github.com/diaspora/diaspora/pull/6679)
 * Add links to the single post view of the related post to photos in the photo stream [#6621](https://github.com/diaspora/diaspora/pull/6621)
+* Add a note for people with disabled JavaScript [#6777](https://github.com/diaspora/diaspora/pull/6777)
+
+# 0.5.9.0
+
+## Refactor
+
+## Bug fixes
+
+## Features
 
 # 0.5.8.0
 
 ## Refactor
 * Sort tag autocompletion by tag name [#6734](https://github.com/diaspora/diaspora/pull/6734)
+* Make account deletions faster by adding an index [#6771](https://github.com/diaspora/diaspora/pull/6771)
 
 ## Bug fixes
 * Fix empty name field when editing aspect names [#6706](https://github.com/diaspora/diaspora/pull/6706)
 * Fix internal server error when trying to log out of an expired session [#6707](https://github.com/diaspora/diaspora/pull/6707)
 * Only mark unread notifications as read [#6711](https://github.com/diaspora/diaspora/pull/6711)
 * Use https for OEmbeds [#6748](https://github.com/diaspora/diaspora/pull/6748)
+* Fix birthday issues on leap days [#6738](https://github.com/diaspora/diaspora/pull/6738)
 
 ## Features
 * Added the footer to conversation pages [#6710](https://github.com/diaspora/diaspora/pull/6710)
