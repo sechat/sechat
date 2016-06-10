@@ -73,7 +73,11 @@ class ConversationsController < ApplicationController
         @conversation.set_read(current_user)
 
         format.js
-        format.json { render :json => @conversation, :status => 200 }
+        format.json {
+          render :json => @conversation.to_json({
+            :include => { :messages => { methods: :author } }
+          }), :status => 200
+        }
       else
         redirect_to conversations_path
       end
