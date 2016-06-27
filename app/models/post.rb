@@ -7,13 +7,14 @@ class Post < ActiveRecord::Base
 
   include ApplicationHelper
 
-  include Diaspora::Federated::Shareable
+  include Diaspora::Federated::Base
 
   include Diaspora::Likeable
   include Diaspora::Commentable
   include Diaspora::Shareable
 
   has_many :participations, dependent: :delete_all, as: :target, inverse_of: :target
+  has_many :participants, class_name: "Person", through: :participations, source: :author
 
   attr_accessor :user_like
 
@@ -22,17 +23,15 @@ class Post < ActiveRecord::Base
   has_many :bookmarks
   has_many :reports, as: :item
 
-  has_many :mentions, :dependent => :destroy
+  has_many :mentions, dependent: :destroy
 
-  has_many :reshares, :class_name => "Reshare", :foreign_key => :root_guid, :primary_key => :guid
-  has_many :resharers, :class_name => 'Person', :through => :reshares, :source => :author
+  has_many :reshares, class_name: "Reshare", foreign_key: :root_guid, primary_key: :guid
+  has_many :resharers, class_name: "Person", through: :reshares, source: :author
 
   belongs_to :o_embed_cache
   belongs_to :open_graph_cache
 
   validates_uniqueness_of :id
-
-  validates :author, presence: true
 
   after_create do
     self.touch(:interacted_at)
@@ -133,15 +132,13 @@ class Post < ActiveRecord::Base
 
   #############
 
-  def self.diaspora_initialize(params)
-    new(params.to_hash.stringify_keys.slice(*column_names)).tap do |new_post|
-      new_post.author = params[:author]
-    end
+  # @return [Integer]
+  def update_reshares_counter
+    self.class.where(id: id).update_all(reshares_count: reshares.count)
   end
 
-  # @return Returns true if this Post will accept updates (i.e. updates to the caption of a photo).
-  def mutable?
-    false
+  def self.diaspora_initialize(params)
+    new(params.to_hash.stringify_keys.slice(*column_names, "author"))
   end
 
   def activity_streams?
@@ -154,5 +151,11 @@ class Post < ActiveRecord::Base
 
   def nsfw
     self.author.profile.nsfw?
+  end
+
+  def subscribers
+    super.tap do |subscribers|
+      subscribers.concat(resharers).concat(participants) if public?
+    end
   end
 end

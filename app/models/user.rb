@@ -3,7 +3,6 @@
 #   the COPYRIGHT file.
 
 class User < ActiveRecord::Base
-  include Encryptor::Private
   include Connecting
   include Querying
   include SocialActions
@@ -115,10 +114,6 @@ class User < ActiveRecord::Base
 
   def invitation_code
     InvitationCode.find_or_create_by(user_id: self.id)
-  end
-
-  def receive_shareable(shareable)
-    ShareVisibility.create!(shareable_id: shareable.id, shareable_type: shareable.class.base_class.to_s, user_id: id)
   end
 
   def hidden_shareables
@@ -233,16 +228,9 @@ class User < ActiveRecord::Base
     save
   end
 
-  ######### Aspects ######################
-  def add_contact_to_aspect(contact, aspect)
-    return true if AspectMembership.exists?(:contact_id => contact.id, :aspect_id => aspect.id)
-    contact.aspect_memberships.create!(:aspect => aspect)
-  end
-
   ######## Posting ########
   def build_post(class_name, opts={})
-    opts[:author] = self.person
-    opts[:diaspora_handle] = opts[:author].diaspora_handle
+    opts[:author] = person
 
     model_class = class_name.to_s.camelize.constantize
     model_class.diaspora_initialize(opts)
@@ -250,7 +238,7 @@ class User < ActiveRecord::Base
 
   def dispatch_post(post, opts={})
     logger.info "user:#{id} dispatching #{post.class}:#{post.guid}"
-    Postzord::Dispatcher.defer_build_and_post(self, post, opts)
+    Diaspora::Federation::Dispatcher.defer_dispatch(self, post, opts)
   end
 
   def update_post(post, post_hash={})
@@ -258,12 +246,6 @@ class User < ActiveRecord::Base
       post.update_attributes(post_hash)
       self.dispatch_post(post)
     end
-  end
-
-  def notify_if_mentioned(post)
-    return unless self.contact_for(post.author) && post.respond_to?(:mentions?)
-
-    post.notify_person(self.person) if post.mentions? self.person
   end
 
   def add_to_streams(post, aspects_to_insert)
@@ -384,26 +366,10 @@ class User < ActiveRecord::Base
   end
 
   ######### Posts and Such ###############
-  def retract(target, opts={})
-    if target.respond_to?(:relayable?) && target.relayable?
-      retraction = RelayableRetraction.build(self, target)
-    elsif target.is_a? Post
-      retraction = SignedRetraction.build(self, target)
-    else
-      retraction = Retraction.for(target)
-    end
-
-    if target.is_a?(Post)
-      opts[:additional_subscribers] = target.resharers
-      opts[:services] = services
-    end
-
-    mailman = Postzord::Dispatcher.build(self, retraction, opts)
-    mailman.post
-
-    retraction.perform(self)
-
-    retraction
+  def retract(target)
+    retraction = Retraction.for(target, self)
+    retraction.defer_dispatch(self)
+    retraction.perform
   end
 
   ########### Profile ######################
@@ -429,8 +395,8 @@ class User < ActiveRecord::Base
     update_profile( self.profile.from_omniauth_hash( user_info ) )
   end
 
-  def deliver_profile_update
-    Postzord::Dispatcher.build(self, profile).post
+  def deliver_profile_update(opts={})
+    Diaspora::Federation::Dispatcher.defer_dispatch(self, profile, opts)
   end
 
   def basic_profile_present?
@@ -489,10 +455,10 @@ class User < ActiveRecord::Base
     conversation = sender.build_conversation(
       participant_ids: [sender.person.id, person.id],
       subject:         AppConfig.settings.welcome_message.subject.get,
-      message:         {text: AppConfig.settings.welcome_message.text.get % {username: username}})
-    if conversation.save
-      Postzord::Dispatcher.build(sender, conversation).post
-    end
+      message:         {text: AppConfig.settings.welcome_message.text.get % {username: username}}
+    )
+
+    Diaspora::Federation::Dispatcher.build(sender, conversation).dispatch if conversation.save
   end
 
   def encryption_key
