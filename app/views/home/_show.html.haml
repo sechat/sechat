@@ -16,12 +16,12 @@
 
       %h4
         :plain
-          SeChat.org is one of <a href="http://podupti.me">many installations</a> of
+          Sechat.org is one of <a href="http://podupti.me">many installations</a> of
           <a href="http://github.com/diaspora/diaspora">diaspora*</a>
 
   #page.container
     #steps.row
-      .col-lg-4
+      .col-lg-6
         %h1
           Diaspora* goes Non-Profit
 
@@ -29,7 +29,7 @@
           Help support our mission of decentralizing the social web!
         = link_to 'Learn more', 'https://blog.diasporafoundation.org/1-diaspora-celebrates-one-year-as-a-community-project'
 
-      .col-lg-4
+      .col-lg-6
         %h1 Decentralization
 
         :plain
@@ -37,13 +37,23 @@
           another! You can register at any of these <a href="http://podupti.me">other pods</a> as well. You can also choose to
           <a href="https://wiki.diasporafoundation.org/FAQ_for_pod_maintainers">set up your own pod</a> if you'd like.</p>
 
-      .col-lg-4
+    #steps.row
+      .col-lg-6
         %h1 Make a contribution!
 
         %p
           Make Diaspora even better! Fork the project on
           = link_to "Github", "http://github.com/diaspora/diaspora"
           make some changes, and submit a pull request.
+
+      .col-lg-6
+        %h1 Hidden Service Protocol
+
+        %p
+          We are reachable through the
+          = link_to "Hidden Service Protocol", "https://www.torproject.org/docs/hidden-services.html.en"
+        %code
+          http://sechatqpscuj2npx.onion
 
     %footer{style: "border-bottom:0;"}
       %h3 Useful Resources
