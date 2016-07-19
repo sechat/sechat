@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
   validates :color_theme, inclusion: {in: AVAILABLE_COLOR_THEME_CODES}, allow_blank: true
   validates_format_of :unconfirmed_email, :with  => Devise.email_regexp, :allow_blank => true
 
+  validate :unconfirmed_email_quasiuniqueness
+
   validates_presence_of :person, :unless => proc {|user| user.invitation_token.present?}
   validates_associated :person
   validate :no_person_with_same_username
@@ -84,6 +86,8 @@ class User < ActiveRecord::Base
   has_many :share_visibilities
 
   before_save :guard_unconfirmed_email
+
+  after_save :remove_invalid_unconfirmed_emails
 
   def self.all_sharing_with_person(person)
     User.joins(:contacts).where(:contacts => {:person_id => person.id})
@@ -322,34 +326,7 @@ class User < ActiveRecord::Base
   end
 
   def perform_export_photos!
-    temp_zip = Tempfile.new([username, '_photos.zip'])
-    begin
-      Zip::OutputStream.open(temp_zip.path) do |zos|
-        photos.each do |photo|
-          begin
-            photo_file = photo.unprocessed_image.file
-            if photo_file
-              photo_data = photo_file.read
-              zos.put_next_entry(photo.remote_photo_name)
-              zos.print(photo_data)
-            else
-              logger.info "Export photos error: No file for #{photo.remote_photo_name} not found"
-            end
-          rescue Errno::ENOENT
-            logger.info "Export photos error: #{photo.unprocessed_image.file.path} not found"
-          end
-        end
-      end
-    ensure
-      temp_zip.close
-    end
-
-    begin
-      update exported_photos_file: temp_zip, exported_photos_at: Time.zone.now if temp_zip.present?
-    ensure
-      restore_attributes if invalid? || temp_zip.present?
-      update exporting_photos: false
-    end
+    PhotoExporter.new(self).perform
   end
 
   ######### Mailer #######################
@@ -486,6 +463,13 @@ class User < ActiveRecord::Base
   end
 
 
+  # Ensure that the unconfirmed email isn't already someone's email
+  def unconfirmed_email_quasiuniqueness
+    if User.exists?(["id != ? AND email = ?", id, unconfirmed_email])
+      errors.add(:unconfirmed_email, I18n.t("errors.messages.taken"))
+    end
+  end
+
   def guard_unconfirmed_email
     self.unconfirmed_email = nil if unconfirmed_email.blank? || unconfirmed_email == email
 
@@ -494,11 +478,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Whenever email is set, clear all unconfirmed emails which match
+  def remove_invalid_unconfirmed_emails
+    User.where(unconfirmed_email: email).update_all(unconfirmed_email: nil) if email_changed?
+  end
+
   # Generate public/private keys for User and associated Person
   def generate_keys
-    key_size = (Rails.env == 'test' ? 512 : 4096)
+    key_size = (Rails.env == "test" ? 512 : 4096)
 
-    self.serialized_private_key = OpenSSL::PKey::RSA::generate(key_size).to_s if self.serialized_private_key.blank?
+    self.serialized_private_key = OpenSSL::PKey::RSA.generate(key_size).to_s if serialized_private_key.blank?
 
     if self.person && self.person.serialized_public_key.blank?
       self.person.serialized_public_key = OpenSSL::PKey::RSA.new(self.serialized_private_key).public_key.to_s
