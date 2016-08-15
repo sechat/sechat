@@ -8,14 +8,8 @@ class Notification < ActiveRecord::Base
   has_many :actors, class_name: "Person", through: :notification_actors, source: :person
   belongs_to :target, polymorphic: true
 
-  attr_accessor :note_html
-
   def self.for(recipient, opts={})
     where(opts.merge!(recipient_id: recipient.id)).order("updated_at DESC")
-  end
-
-  def as_json(opts={})
-    super(opts.merge(methods: :note_html))
   end
 
   def email_the_user(target, actor)
@@ -35,7 +29,7 @@ class Notification < ActiveRecord::Base
   end
 
   def self.concatenate_or_create(recipient, target, actor)
-    return nil if suppress_notification?(recipient, target)
+    return nil if suppress_notification?(recipient, actor)
 
     find_or_initialize_by(recipient: recipient, target: target, unread: true).tap do |notification|
       notification.actors |= [actor]
@@ -48,12 +42,14 @@ class Notification < ActiveRecord::Base
     end
   end
 
-  def self.create_notification(recipient_id, target, actor)
-    create(recipient_id: recipient_id, target: target, actors: [actor])
+  def self.create_notification(recipient, target, actor)
+    return nil if suppress_notification?(recipient, actor)
+
+    create(recipient: recipient, target: target, actors: [actor])
   end
 
-  private_class_method def self.suppress_notification?(recipient, post)
-    post.is_a?(Post) && recipient.is_shareable_hidden?(post)
+  private_class_method def self.suppress_notification?(recipient, actor)
+    recipient.blocks.where(person: actor).exists?
   end
 
   def self.types

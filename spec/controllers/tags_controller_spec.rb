@@ -7,7 +7,7 @@ require 'spec_helper'
 describe TagsController, :type => :controller do
   describe '#index (search)' do
     before do
-      sign_in :user, alice
+      sign_in alice, scope: :user
       bob.profile.tag_string = "#cats #diaspora #rad"
       bob.profile.build_tags
       bob.profile.save!
@@ -38,7 +38,7 @@ describe TagsController, :type => :controller do
   describe '#show' do
     context 'tag with capital letters' do
       before do
-        sign_in :user, alice
+        sign_in alice, scope: :user
       end
 
       it 'redirect to the downcase tag uri' do
@@ -67,7 +67,7 @@ describe TagsController, :type => :controller do
 
       context 'signed in' do
         before do
-          sign_in :user, alice
+          sign_in alice, scope: :user
         end
 
         it 'assigns a Stream::Tag object with the current_user' do
@@ -106,6 +106,18 @@ describe TagsController, :type => :controller do
         it 'succeeds with mobile' do
           get :show, :name => 'foo', :format => :mobile
           expect(response).to be_success
+        end
+
+        it "returns the post with the correct age" do
+          post2 = eve.post(
+            :status_message,
+            text:       "#what #yes #hellyes #foo tagged second post",
+            public:     true,
+            created_at: @post.created_at - 1.day
+          )
+          get :show, name: "what", max_time: @post.created_at, format: :json
+          expect(JSON.parse(response.body).size).to be(1)
+          expect(JSON.parse(response.body).first["guid"]).to eq(post2.guid)
         end
       end
     end

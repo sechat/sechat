@@ -7,7 +7,7 @@ require "sidekiq/cron/web"
 
 Diaspora::Application.routes.draw do
 
-  resources :report, :except => [:edit, :new]
+  resources :report, except: %i(edit new show)
 
   if Rails.env.production?
     mount RailsAdmin::Engine => '/admin_panel', :as => 'rails_admin'
@@ -25,11 +25,11 @@ Diaspora::Application.routes.draw do
 
   get 'oembed' => 'posts#oembed', :as => 'oembed'
   # Posting and Reading
-  resources :reshares
+  resources :reshares, only: %i(create)
 
   resources :status_messages, :only => [:new, :create]
 
-  resources :posts do
+  resources :posts, only: %i(show destroy) do
     member do
       get :interactions
     end
@@ -59,7 +59,7 @@ Diaspora::Application.routes.draw do
   get "aspects" => "streams#aspects", :as => "aspects_stream"
   get "bookmarked" => "streams#bookmarked", :as => "bookmarked_stream"
 
-  resources :aspects do
+  resources :aspects, except: %i(index new edit) do
     put :toggle_contact_visibility
     put :toggle_chat_privilege
     collection do
@@ -69,15 +69,15 @@ Diaspora::Application.routes.draw do
 
   get 'bookmarklet' => 'status_messages#bookmarklet'
 
-  resources :photos, :except => [:index, :show] do
+  resources :photos, only: %i(destroy create) do
     put :make_profile_photo
   end
 
 	#Search
 	get 'search' => "search#search"
 
-  resources :conversations do
-    resources :messages, :only => [:create, :show]
+  resources :conversations, except: %i(edit update destroy)  do
+    resources :messages, only: %i(create)
     delete 'visibility' => 'conversation_visibilities#destroy'
   end
 
@@ -98,11 +98,10 @@ Diaspora::Application.routes.draw do
 
   get 'tags/:name' => 'tags#show', :as => 'tag'
 
-  resources :apps, :only => [:show]
-
   # Users and people
 
-  resource :user, :only => [:edit, :update, :destroy], :shallow => true do
+  resource :user, only: %i(edit destroy), shallow: true do
+    put :edit, action: :update
     get :getting_started_completed
     post :export_profile
     get :download_profile
@@ -111,27 +110,22 @@ Diaspora::Application.routes.draw do
   end
 
   controller :users do
-    get 'public/:username'          => :public,           :as => 'users_public'
-    get 'getting_started'           => :getting_started,  :as => 'getting_started'
-    get 'privacy'                   => :privacy_settings, :as => 'privacy_settings'
-    get 'getting_started_completed' => :getting_started_completed
-    get 'confirm_email/:token'      => :confirm_email,    :as => 'confirm_email'
+    get "public/:username"          => :public,                  :as => :users_public
+    get "getting_started"           => :getting_started,         :as => :getting_started
+    get "confirm_email/:token"      => :confirm_email,           :as => :confirm_email
+    get "privacy"                   => :privacy_settings,        :as => :privacy_settings
+    put "privacy"                   => :update_privacy_settings, :as => :update_privacy_settings
+    get "getting_started_completed" => :getting_started_completed
   end
 
-  put 'privacy' => 'privacy#update', :as => 'privacy'
+  devise_for :users, controllers: {sessions: :sessions}, skip: :registration
+  devise_scope :user do
+    get "/users/sign_up" => "registrations#new",    :as => :new_user_registration
+    post "/users"        => "registrations#create", :as => :user_registration
+  end
 
-  # This is a hack to overide a route created by devise.
-  # I couldn't find anything in devise to skip that route, see Bug #961
-  get 'users/edit' => redirect('/user/edit')
-
-  devise_for :users, :controllers => {:registrations => "registrations",
-                                      :sessions      => "sessions"}
-
-  #legacy routes to support old invite routes
-  get 'users/invitation/accept' => 'invitations#edit'
-  get 'invitations/email' => 'invitations#email', :as => 'invite_email'
-  get 'users/invitations' => 'invitations#new', :as => 'new_user_invitation'
-  post 'users/invitations' => 'invitations#create', :as => 'user_invitation'
+  get "users/invitations"  => "invitations#new",    :as => "new_user_invitation"
+  post "users/invitations" => "invitations#create", :as => "user_invitation"
 
   get 'login' => redirect('/users/sign_in')
 
@@ -160,8 +154,7 @@ Diaspora::Application.routes.draw do
   resources :profiles, :only => [:show]
 
 
-  resources :contacts,           :except => [:update, :create] do
-  end
+  resources :contacts, only: %i(index)
   resources :aspect_memberships, :only  => [:destroy, :create]
   resources :share_visibilities,  :only => [:update]
   resources :blocks, :only => [:create, :destroy]
@@ -169,21 +162,15 @@ Diaspora::Application.routes.draw do
   get 'i/:id' => 'invitation_codes#show', :as => 'invite_code'
 
   get 'people/refresh_search' => "people#refresh_search"
-  resources :people, :except => [:edit, :update] do
-    resources :status_messages
-    resources :photos
+  resources :people, only: %i(show index) do
+    resources :status_messages, only: %i(new create)
+    resources :photos, except:  %i(new update)
     get :contacts
-    get "aspect_membership_button" => :aspect_membership_dropdown, :as => "aspect_membership_button"
     get :stream
     get :hovercard
 
-    member do
-      get :last_post
-    end
-
     collection do
       post 'by_handle' => :retrieve_remote, :as => 'person_by_handle'
-      get :tag_index
     end
   end
   get '/u/:username' => 'people#show', :as => 'user_profile', :constraints => { :username => /[^\/]+/ }
@@ -234,10 +221,6 @@ Diaspora::Application.routes.draw do
   # Startpage
   root :to => 'home#show'
   get "podmin", to: "home#podmin"
-
-  api_version(module: "Api::V0", path: {value: "api/v0"}, default: true) do
-    match "user", to: "users#show", via: %i(get post)
-  end
 
   namespace :api do
     namespace :openid_connect do

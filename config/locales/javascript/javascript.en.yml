@@ -106,15 +106,25 @@ en:
       inPast: "any moment now"
       seconds: "less than a minute"
       minute: "about a minute"
-      minutes: "%d minutes"
+      minutes:
+        one: "1 minute"
+        other: "%d minutes"
       hour: "about an hour"
-      hours: "about %d hours"
+      hours:
+        one: "about 1 hour"
+        other: "about %d hours"
       day: "a day"
-      days: "%d days"
+      days:
+        one: "1 day"
+        other: "%d days"
       month: "about a month"
-      months: "%d months"
+      months:
+        one: "1 month"
+        other: "%d months"
       year: "about a year"
-      years: "%d years"
+      years:
+        one: "1 year"
+        other: "%d years"
       wordSeparator: " "
 
     contacts:
@@ -139,6 +149,35 @@ en:
       option: "Answer"
       add_option: "Add an answer"
       question: "Question"
+      markdown_editor:
+        preview: "Preview"
+        write: "Write"
+        tooltips:
+          bold: "Bold"
+          italic: "Italic"
+          heading: "Heading"
+          insert_link: "Insert link"
+          insert_image: "Insert image"
+          insert_ordered_list: "Insert ordered list"
+          insert_unordered_list: "Insert unordered list"
+          preview: "Preview message"
+          write: "Edit message"
+          cancel: "Cancel message"
+          quote: "Insert quotation"
+          code: "Insert code"
+        texts:
+          strong: "strong text"
+          italic: "italic text"
+          heading: "heading text"
+          insert_link_description_text: "enter link description here"
+          insert_link_help_text: "Insert link here"
+          insert_image_description_text: "enter image description here"
+          insert_image_help_text: "Insert image link here"
+          insert_image_title: "enter image title here"
+          list: "list text here"
+          quote: "quotation text here"
+          code: "code here"
+
     bookmarklet:
       post_something: "Post to diaspora*"
       post_submit: "Submitting post..."
@@ -155,7 +194,6 @@ en:
       error: "Couldn’t start sharing with <%= name %>.  Are you ignoring them?"
       error_remove: "Couldn’t remove <%= name %> from the aspect :("
       toggle:
-        zero: "Select aspects"
         one: "In <%= count %> aspect"
         other: "In <%= count %> aspects"
     show_more: "Show more"
@@ -238,6 +276,7 @@ en:
       disable_post_notifications: "Disable notifications for this post"
       permalink: "Permalink"
       via: "via <%= provider %>"
+      no_posts_yet: "There are no posts to display here yet."
 
       likes:
         zero: "<%= count %> Likes"

@@ -65,7 +65,7 @@ And /^I expand the publisher$/ do
 end
 
 And /^I close the publisher$/ do
- find("#publisher #hide_publisher").click
+  find("#publisher .md-cancel").click
 end
 
 Then /^the publisher should be expanded$/ do
@@ -255,16 +255,16 @@ Then 'I press the attached image' do
 end
 
 And "I wait for the popovers to appear" do
-  page.should have_selector(".popover", count: 3)
+  expect(page).to have_selector(".popover", count: 3)
 end
 
 And /^I click close on all the popovers$/ do
-  page.execute_script("$('.popover .close')[0].click();")
-  expect(page).to have_selector(".popover", count: 2)
-  page.execute_script("$('.popover .close')[0].click();")
-  expect(page).to have_selector(".popover", count: 1)
-  page.execute_script("$('.popover .close').click();")
-  expect(page).to_not have_selector(".popover .close")
+  find(".popover .close", match: :first).click
+  expect(page).to have_selector(".popover", count: 2, visible: false)
+  find(".popover .close", match: :first).click
+  expect(page).to have_selector(".popover", count: 1, visible: false)
+  find(".popover .close", match: :first).click
+  expect(page).to_not have_selector(".popover", visible: false)
 end
 
 Then /^I should see a flash message indicating success$/ do
@@ -324,7 +324,7 @@ Then(/^I should have a validation error on "(.*?)"$/) do |field_list|
   check_fields_validation_error field_list
 end
 
-And /^I active the first hovercard after loading the notifications page$/ do
+And /^I activate the first hovercard after loading the notifications page$/ do
   page.should have_css '.notifications .hovercardable'
   first('.notifications .hovercardable').hover
 end

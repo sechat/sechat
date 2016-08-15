@@ -8,7 +8,7 @@
 //= require backbone
 //= require jquery.remotipart
 //= require autosize
-//= require jquery.charcount
+//= require charcount
 //= require jquery-placeholder
 //= require rails-timeago
 //= require jquery.events.input
@@ -30,7 +30,7 @@
 //= require markdown-it-sup
 //= require highlightjs
 //= require clear-form
-//= require typeahead.js
+//= require typeahead.bundle.js
 //= require app/app
 //= require diaspora
 //= require_tree ./helpers
@@ -43,3 +43,5 @@
 //= require blueimp-gallery/blueimp-gallery-indicator
 //= require leaflet
 //= require api/authorization_page
+// = require bootstrap-markdown/bootstrap-markdown
+// = require helpers/markdown_editor

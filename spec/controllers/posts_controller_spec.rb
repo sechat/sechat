@@ -11,7 +11,7 @@ describe PostsController, type: :controller do
     context "user signed in" do
       context "given a post that the user is allowed to see" do
         before do
-          sign_in :user, alice
+          sign_in alice, scope: :user
         end
 
         it "succeeds" do
@@ -55,7 +55,7 @@ describe PostsController, type: :controller do
 
       context "given a post that the user is not allowed to see" do
         before do
-          sign_in :user, eve
+          sign_in eve, scope: :user
         end
 
         it "returns a 404" do
@@ -133,7 +133,7 @@ describe PostsController, type: :controller do
 
     context "post of another user" do
       it "will respond with a 403" do
-        sign_in :user, bob
+        sign_in bob, scope: :user
 
         delete :destroy, format: :json, id: post.id
         expect(response.body).to eq("You are not allowed to do that")
@@ -141,7 +141,7 @@ describe PostsController, type: :controller do
       end
 
       it "will respond with a 404 if the post is not visible" do
-        sign_in :user, eve
+        sign_in eve, scope: :user
 
         expect {
           delete :destroy, format: :json, id: post.id

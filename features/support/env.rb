@@ -36,10 +36,10 @@ Capybara.javascript_driver = :poltergeist
 Capybara.default_selector = :css
 
 # We have a ridiculously high wait time to account for build machines of various beefiness.
-# Capybara.default_max_wait_time = 30
+Capybara.default_max_wait_time = 30
 
 # While there are a lot of failures, wait less, avoiding travis timeout
-Capybara.default_max_wait_time = 15
+# Capybara.default_max_wait_time = 15
 
 # If you set this to false, any error raised from within your app will bubble
 # up to your step definition and out to cucumber unless you catch it somewhere
@@ -70,6 +70,9 @@ Before do |scenario|
   page.driver.headers = if scenario.source_tag_names.include? "@mobile"
                           {"User-Agent" => "Mozilla/5.0 (Mobile; rv:18.0) Gecko/18.0 Firefox/18.0"}
                         else
-                          page.driver.headers = {}
+                          {}
                         end
+
+  # Reset overridden settings
+  AppConfig.reset_dynamic!
 end

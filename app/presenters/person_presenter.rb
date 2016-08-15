@@ -9,10 +9,9 @@ class PersonPresenter < BasePresenter
   end
 
   def full_hash
-    base_hash.merge(
+    base_hash_with_contact.merge(
       relationship:      relationship,
       block:             is_blocked? ? BlockPresenter.new(current_user_person_block).base_hash : false,
-      contact:           (!own_profile? && has_contact?) ? {id: current_user_person_contact.id} : false,
       is_own_profile:    own_profile?,
       profile_role_name: profile_role_name,
       profile_role_exists: (!profile_role_name.nil?),
@@ -23,6 +22,10 @@ class PersonPresenter < BasePresenter
 
   def as_json(_options={})
     full_hash_with_profile
+  end
+
+  def hovercard
+    base_hash_with_contact.merge(profile: ProfilePresenter.new(profile).for_hovercard)
   end
 
   protected
@@ -61,6 +64,12 @@ class PersonPresenter < BasePresenter
     contact && contact.sharing?
   end
 
+  def base_hash_with_contact
+    base_hash.merge(
+      contact: (!own_profile? && has_contact?) ? contact_hash : false
+    )
+  end
+
   def full_hash_with_profile
     attrs = full_hash
 
@@ -71,6 +80,10 @@ class PersonPresenter < BasePresenter
     end
 
     attrs
+  end
+
+  def contact_hash
+    ContactPresenter.new(current_user_person_contact).full_hash
   end
 
   private
