@@ -945,9 +945,9 @@ DEPENDENCIES
   faraday_middleware (= 0.10.0)
   fixture_builder (= 0.4.1)
   fog (= 1.38.0)
-  gpgme
   fuubar (= 2.1.1)
   gon (= 6.1.0)
+  gpgme
   guard (= 2.14.0)
   guard-cucumber (= 2.1.2)
   guard-rspec (= 4.7.3)

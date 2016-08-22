@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618033455) do
+ActiveRecord::Schema.define(version: 20160813115514) do
 
   create_table "account_deletions", force: :cascade do |t|
     t.string   "diaspora_handle", limit: 255
@@ -107,12 +107,21 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.datetime "created_at",               null: false
   end
 
+  create_table "comment_signatures", id: false, force: :cascade do |t|
+    t.integer "comment_id",         limit: 4,     null: false
+    t.text    "author_signature",   limit: 65535, null: false
+    t.integer "signature_order_id", limit: 4,     null: false
+    t.text    "additional_data",    limit: 65535
+  end
+
+  add_index "comment_signatures", ["comment_id"], name: "index_comment_signatures_on_comment_id", unique: true, using: :btree
+  add_index "comment_signatures", ["signature_order_id"], name: "comment_signatures_signature_orders_id_fk", using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.text     "text",             limit: 16777215,                  null: false
     t.integer  "commentable_id",   limit: 4,                         null: false
     t.integer  "author_id",        limit: 4,                         null: false
     t.string   "guid",             limit: 255,                       null: false
-    t.text     "author_signature", limit: 16777215
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.integer  "likes_count",      limit: 4,        default: 0,      null: false
@@ -165,16 +174,6 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.text    "fingerprint", limit: 255
   end
 
-  create_table "id_tokens", force: :cascade do |t|
-    t.integer  "authorization_id", limit: 4
-    t.datetime "expires_at"
-    t.string   "nonce",            limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "id_tokens", ["authorization_id"], name: "index_id_tokens_on_authorization_id", using: :btree
-
   create_table "invitation_codes", force: :cascade do |t|
     t.string   "token",      limit: 255
     t.integer  "user_id",    limit: 4
@@ -183,22 +182,15 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "invitations", force: :cascade do |t|
-    t.text     "message",      limit: 16777215
-    t.integer  "sender_id",    limit: 4
-    t.integer  "recipient_id", limit: 4
-    t.integer  "aspect_id",    limit: 4
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.string   "service",      limit: 255
-    t.string   "identifier",   limit: 255
-    t.boolean  "admin",                         default: false
-    t.string   "language",     limit: 255,      default: "en"
+  create_table "like_signatures", id: false, force: :cascade do |t|
+    t.integer "like_id",            limit: 4,     null: false
+    t.text    "author_signature",   limit: 65535, null: false
+    t.integer "signature_order_id", limit: 4,     null: false
+    t.text    "additional_data",    limit: 65535
   end
 
-  add_index "invitations", ["aspect_id"], name: "index_invitations_on_aspect_id", using: :btree
-  add_index "invitations", ["recipient_id"], name: "index_invitations_on_recipient_id", using: :btree
-  add_index "invitations", ["sender_id"], name: "index_invitations_on_sender_id", using: :btree
+  add_index "like_signatures", ["like_id"], name: "index_like_signatures_on_like_id", unique: true, using: :btree
+  add_index "like_signatures", ["signature_order_id"], name: "like_signatures_signature_orders_id_fk", using: :btree
 
   create_table "likes", force: :cascade do |t|
     t.boolean  "positive",                          default: true
@@ -408,6 +400,16 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   add_index "poll_answers", ["guid"], name: "index_poll_answers_on_guid", unique: true, length: {"guid"=>191}, using: :btree
   add_index "poll_answers", ["poll_id"], name: "index_poll_answers_on_poll_id", using: :btree
 
+  create_table "poll_participation_signatures", id: false, force: :cascade do |t|
+    t.integer "poll_participation_id", limit: 4,     null: false
+    t.text    "author_signature",      limit: 65535, null: false
+    t.integer "signature_order_id",    limit: 4,     null: false
+    t.text    "additional_data",       limit: 65535
+  end
+
+  add_index "poll_participation_signatures", ["poll_participation_id"], name: "index_poll_participation_signatures_on_poll_participation_id", unique: true, using: :btree
+  add_index "poll_participation_signatures", ["signature_order_id"], name: "poll_participation_signatures_signature_orders_id_fk", using: :btree
+
   create_table "poll_participations", force: :cascade do |t|
     t.integer  "poll_answer_id",   limit: 4,     null: false
     t.integer  "author_id",        limit: 4,     null: false
@@ -448,31 +450,17 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.integer  "author_id",             limit: 4,                        null: false
     t.boolean  "public",                                 default: false, null: false
     t.string   "guid",                  limit: 255,                      null: false
-    t.boolean  "pending",                                default: false, null: false
     t.string   "type",                  limit: 40,                       null: false
     t.text     "text",                  limit: 16777215
-    t.text     "remote_photo_path",     limit: 16777215
-    t.string   "remote_photo_name",     limit: 255
-    t.string   "random_string",         limit: 255
-    t.string   "processed_image",       limit: 255
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
-    t.string   "unprocessed_image",     limit: 255
-    t.string   "object_url",            limit: 255
-    t.string   "image_url",             limit: 255
-    t.integer  "image_height",          limit: 4
-    t.integer  "image_width",           limit: 4
     t.string   "provider_display_name", limit: 255
-    t.string   "actor_url",             limit: 255
-    t.string   "objectId",              limit: 255
     t.string   "root_guid",             limit: 255
-    t.string   "status_message_guid",   limit: 255
     t.integer  "likes_count",           limit: 4,        default: 0
     t.integer  "comments_count",        limit: 4,        default: 0
     t.integer  "o_embed_cache_id",      limit: 4
     t.integer  "reshares_count",        limit: 4,        default: 0
     t.datetime "interacted_at"
-    t.string   "frame_name",            limit: 255
     t.string   "facebook_id",           limit: 255
     t.string   "tweet_id",              limit: 255
     t.integer  "open_graph_cache_id",   limit: 4
@@ -483,11 +471,9 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   add_index "posts", ["author_id"], name: "index_posts_on_person_id", using: :btree
   add_index "posts", ["guid"], name: "index_posts_on_guid", unique: true, length: {"guid"=>191}, using: :btree
   add_index "posts", ["id", "type", "created_at"], name: "index_posts_on_id_and_type_and_created_at", using: :btree
+  add_index "posts", ["id", "type"], name: "index_posts_on_id_and_type", using: :btree
   add_index "posts", ["root_guid"], name: "index_posts_on_root_guid", length: {"root_guid"=>191}, using: :btree
-  add_index "posts", ["status_message_guid", "pending"], name: "index_posts_on_status_message_guid_and_pending", length: {"status_message_guid"=>190, "pending"=>nil}, using: :btree
-  add_index "posts", ["status_message_guid"], name: "index_posts_on_status_message_guid", length: {"status_message_guid"=>191}, using: :btree
   add_index "posts", ["tweet_id"], name: "index_posts_on_tweet_id", length: {"tweet_id"=>191}, using: :btree
-  add_index "posts", ["type", "pending", "id"], name: "index_posts_on_type_and_pending_and_id", using: :btree
 
   create_table "ppid", force: :cascade do |t|
     t.integer "o_auth_application_id", limit: 4
@@ -582,6 +568,12 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   add_index "share_visibilities", ["shareable_id"], name: "index_post_visibilities_on_post_id", using: :btree
   add_index "share_visibilities", ["user_id"], name: "index_share_visibilities_on_user_id", using: :btree
 
+  create_table "signature_orders", force: :cascade do |t|
+    t.string "order", limit: 255, null: false
+  end
+
+  add_index "signature_orders", ["order"], name: "index_signature_orders_on_order", unique: true, length: {"order"=>191}, using: :btree
+
   create_table "simple_captcha_data", force: :cascade do |t|
     t.string   "key",        limit: 40
     t.string   "value",      limit: 12
@@ -632,7 +624,7 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",                           limit: 255
+    t.string   "username",                           limit: 255,                      null: false
     t.text     "serialized_private_key",             limit: 16777215
     t.boolean  "getting_started",                                     default: true,  null: false
     t.boolean  "disable_mail",                                        default: false, null: false
@@ -640,8 +632,6 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.string   "email",                              limit: 255,      default: "",    null: false
     t.boolean  "email_forward",                                       default: false
     t.string   "encrypted_password",                 limit: 255,      default: "",    null: false
-    t.string   "invitation_token",                   limit: 60
-    t.datetime "invitation_sent_at"
     t.string   "reset_password_token",               limit: 255
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                      limit: 4,        default: 0
@@ -651,11 +641,7 @@ ActiveRecord::Schema.define(version: 20160618033455) do
     t.string   "last_sign_in_ip",                    limit: 255
     t.datetime "created_at",                                                          null: false
     t.datetime "updated_at",                                                          null: false
-    t.string   "invitation_service",                 limit: 127
-    t.string   "invitation_identifier",              limit: 127
-    t.integer  "invitation_limit",                   limit: 4
     t.integer  "invited_by_id",                      limit: 4
-    t.string   "invited_by_type",                    limit: 255
     t.string   "authentication_token",               limit: 30
     t.string   "unconfirmed_email",                  limit: 255
     t.string   "confirm_email_token",                limit: 30
@@ -678,9 +664,7 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", length: {"email"=>191}, using: :btree
-  add_index "users", ["invitation_service", "invitation_identifier"], name: "index_users_on_invitation_service_and_invitation_identifier", unique: true, length: {"invitation_service"=>64, "invitation_identifier"=>nil}, using: :btree
-  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, length: {"email"=>191}, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, length: {"username"=>191}, using: :btree
 
   add_foreign_key "aspect_memberships", "aspects", name: "aspect_memberships_aspect_id_fk", on_delete: :cascade
@@ -688,14 +672,15 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   add_foreign_key "aspect_visibilities", "aspects", name: "aspect_visibilities_aspect_id_fk", on_delete: :cascade
   add_foreign_key "authorizations", "o_auth_applications"
   add_foreign_key "authorizations", "users"
+  add_foreign_key "comment_signatures", "comments", name: "comment_signatures_comment_id_fk", on_delete: :cascade
+  add_foreign_key "comment_signatures", "signature_orders", name: "comment_signatures_signature_orders_id_fk"
   add_foreign_key "comments", "people", column: "author_id", name: "comments_author_id_fk", on_delete: :cascade
   add_foreign_key "contacts", "people", name: "contacts_person_id_fk", on_delete: :cascade
   add_foreign_key "conversation_visibilities", "conversations", name: "conversation_visibilities_conversation_id_fk", on_delete: :cascade
   add_foreign_key "conversation_visibilities", "people", name: "conversation_visibilities_person_id_fk", on_delete: :cascade
   add_foreign_key "conversations", "people", column: "author_id", name: "conversations_author_id_fk", on_delete: :cascade
-  add_foreign_key "id_tokens", "authorizations"
-  add_foreign_key "invitations", "users", column: "recipient_id", name: "invitations_recipient_id_fk", on_delete: :cascade
-  add_foreign_key "invitations", "users", column: "sender_id", name: "invitations_sender_id_fk", on_delete: :cascade
+  add_foreign_key "like_signatures", "likes", name: "like_signatures_like_id_fk", on_delete: :cascade
+  add_foreign_key "like_signatures", "signature_orders", name: "like_signatures_signature_orders_id_fk"
   add_foreign_key "likes", "people", column: "author_id", name: "likes_author_id_fk", on_delete: :cascade
   add_foreign_key "messages", "conversations", name: "messages_conversation_id_fk", on_delete: :cascade
   add_foreign_key "messages", "people", column: "author_id", name: "messages_author_id_fk", on_delete: :cascade
@@ -703,6 +688,8 @@ ActiveRecord::Schema.define(version: 20160618033455) do
   add_foreign_key "o_auth_access_tokens", "authorizations"
   add_foreign_key "o_auth_applications", "users"
   add_foreign_key "people", "pods", name: "people_pod_id_fk", on_delete: :cascade
+  add_foreign_key "poll_participation_signatures", "poll_participations", name: "poll_participation_signatures_poll_participation_id_fk", on_delete: :cascade
+  add_foreign_key "poll_participation_signatures", "signature_orders", name: "poll_participation_signatures_signature_orders_id_fk"
   add_foreign_key "posts", "people", column: "author_id", name: "posts_author_id_fk", on_delete: :cascade
   add_foreign_key "ppid", "o_auth_applications"
   add_foreign_key "ppid", "users"
