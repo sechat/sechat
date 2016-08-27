@@ -7,6 +7,7 @@ class PeopleController < ApplicationController
 
   before_action :authenticate_user!, except: %i(show stream hovercard)
   before_action :find_person, only: %i(show stream hovercard)
+  before_action :authenticate_if_remote_profile!, only: %i(show stream)
 
   respond_to :html
   respond_to :json, :only => [:index, :show]
@@ -62,33 +63,32 @@ class PeopleController < ApplicationController
       self.formats = self.formats + [:html]
       @answer_html = render_to_string :partial => 'people/person', :locals => @hashes.first
     end
-    render :json => { :search_count => @people.count, :search_html => @answer_html }.to_json
+    render json: {search_html: @answer_html, contacts: gon.preloads[:contacts]}.to_json
   end
 
   # renders the persons user profile page
   def show
     mark_corresponding_notifications_read if user_signed_in?
-
-    @person_json = PersonPresenter.new(@person, current_user).as_json
+    @presenter = PersonPresenter.new(@person, current_user)
 
     respond_to do |format|
       format.all do
         if user_signed_in?
           @contact = current_user.contact_for(@person)
         end
-        gon.preloads[:person] = @person_json
+        gon.preloads[:person] = @presenter.as_json
         gon.preloads[:photos_count] = Photo.visible(current_user, @person).count(:all)
         gon.preloads[:contacts_count] = Contact.contact_contacts_for(current_user, @person).count(:all)
-        respond_with @person, layout: "with_header"
+        respond_with @presenter, layout: "with_header"
       end
 
       format.mobile do
         @post_type = :all
         person_stream
-        respond_with @person
+        respond_with @presenter
       end
 
-      format.json { render json: @person_json }
+      format.json { render json: @presenter.as_json }
     end
   end
 
@@ -163,8 +163,6 @@ class PeopleController < ApplicationController
         })
       end
 
-    # view this profile on the home pod, if you don't want to sign in...
-    authenticate_user! if remote_profile_with_no_user_session?
     raise ActiveRecord::RecordNotFound if @person.nil?
     raise Diaspora::AccountClosed if @person.closed_account?
   end
@@ -186,11 +184,12 @@ class PeopleController < ApplicationController
   end
 
   def diaspora_id?(query)
-    !query.try(:match, /^(\w)*@([a-zA-Z0-9]|[-]|[.]|[:])*$/).nil?
+    !(query.nil? || query.lstrip.empty?) && Validation::Rule::DiasporaId.new.valid_value?(query)
   end
 
-  def remote_profile_with_no_user_session?
-    @person.try(:remote?) && !user_signed_in?
+  # view this profile on the home pod, if you don't want to sign in...
+  def authenticate_if_remote_profile!
+    authenticate_user! if @person.try(:remote?)
   end
 
   def mark_corresponding_notifications_read
