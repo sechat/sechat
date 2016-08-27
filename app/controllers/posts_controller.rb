@@ -19,7 +19,7 @@ class PostsController < ApplicationController
   def show
     @post = post_service.find!(params[:id])
     post_service.mark_user_notifications(@post.id)
-    presenter = PostPresenter.new(post, current_user)
+    presenter = PostPresenter.new(@post, current_user)
     respond_to do |format|
       format.html {
         gon.post = presenter
