@@ -87,6 +87,10 @@ class Notifier < ActionMailer::Base
     send_notification(:confirm_email, recipient_id)
   end
 
+  def csrf_token_fail(recipient_id)
+    send_notification(:csrf_token_fail, recipient_id)
+  end
+
   private
   def send_notification(type, recipient_id, *args)
     @recipient_id = recipient_id
