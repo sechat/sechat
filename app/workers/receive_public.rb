@@ -6,6 +6,9 @@ module Workers
   class ReceivePublic < ReceiveBase
     def perform(data, legacy=false)
       filter_errors_for_retry do
+        if blacklisted?(data, legacy)
+          throw DiasporaFederation::Federation::Receiver::InvalidSender
+        end
         DiasporaFederation::Federation::Receiver.receive_public(data, legacy)
       end
     end

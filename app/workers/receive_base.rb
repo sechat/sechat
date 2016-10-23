@@ -30,5 +30,34 @@ module Workers
            DiasporaFederation::Salmon::InvalidHeader => e
       logger.warn "don't retry for error: #{e.class}"
     end
+
+    def blacklisted?(data, legacy, rsa_key=nil)
+      blacklist = AppConfig.blacklist.to_a
+      magic_env = if legacy
+        if rsa_key.nil?
+          DiasporaFederation::Salmon::Slap.from_xml(data)
+        else
+          DiasporaFederation::Salmon::EncryptedSlap.from_xml(data, rsa_key)
+        end
+      else
+        if rsa_key.nil?
+          magic_env_xml = Nokogiri::XML::Document.parse(data).root
+          DiasporaFederation::Salmon::MagicEnvelope.unenvelop(magic_env_xml)
+        else
+          magic_env_xml = Salmon::EncryptedMagicEnvelope.decrypt(data, rsa_key)
+          DiasporaFederation::Salmon::MagicEnvelope.unenvelop(magic_env_xml)
+        end
+      end
+      blacklist.each {|sheep|
+        if sheep.eql? magic_env.sender
+          logger.info "#{magic_env.sender} is blacklisted! Skipping.."
+          return true
+        end
+      }
+      false
+    rescue Exception => e
+      logger.warn "Exception while checking blacklist: #{e.message}"
+      false
+    end
   end
 end
