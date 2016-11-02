@@ -67,8 +67,8 @@ defaults:
   map:
     mapbox:
       enabled: false
-      id:
       access_token:
+      style: "mapbox/streets-v9"
   privacy:
     jquery_cdn: false
     google_analytics_key:
@@ -148,6 +148,9 @@ defaults:
     default_metas:
       title: 'diaspora* social network'
       description: 'diaspora* is the online social world where you are in control.'
+    csp:
+      report_only: true
+      report_uri:
   services:
     facebook:
       enable: false

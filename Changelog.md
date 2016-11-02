@@ -6,7 +6,17 @@
 
 ## Features
 
+# 0.6.2.0
+
+## Refactor
+
+## Bug fixes
+
+## Features
+
 # 0.6.1.0
+
+Note: Although this is a minor release, the configuration file changed because the old Mapbox implementation is no longer valid, and the current implementation requires additional fields. Chances are high that if you're using the old integration, it will be broken anyway. If you do use Mapbox, please check out the `diaspora.yml.example` for new parameters.
 
 ## Refactor
 * Indicate proper way to report bugs in the sidebar [#7039](https://github.com/diaspora/diaspora/pull/7039)
@@ -17,6 +27,12 @@
 * Improve W3C compliance [#7068](https://github.com/diaspora/diaspora/pull/7068) [#7082](https://github.com/diaspora/diaspora/pull/7082) [#7091](https://github.com/diaspora/diaspora/pull/7091) [#7092](https://github.com/diaspora/diaspora/pull/7092)
 * Load jQuery in the head on mobile [#7086](https://github.com/diaspora/diaspora/pull/7086)
 * Use translation for NodeInfo services [#7102](https://github.com/diaspora/diaspora/pull/7102)
+* Adopt new Mapbox tile URIs [#7066](https://github.com/diaspora/diaspora/pull/7066)
+* Refactored post interactions on the single post view [#7089](https://github.com/diaspora/diaspora/pull/7089)
+* Extract inline JavaScript [#7113](https://github.com/diaspora/diaspora/pull/7113)
+* Port conversations inbox to backbone.js [#7108](https://github.com/diaspora/diaspora/pull/7108)
+* Refactored stream shortcuts for more flexibility [#7127](https://github.com/diaspora/diaspora/pull/7127)
+* Link to admin dashboard instead of admin panel from the podmin landing page [#7130](https://github.com/diaspora/diaspora/pull/7130)
 
 ## Bug fixes
 * Post comments no longer get collapsed when interacting with a post [#7040](https://github.com/diaspora/diaspora/pull/7040)
@@ -32,6 +48,13 @@
 * Fix link to comment on report page [#7105](https://github.com/diaspora/diaspora/pull/7105)
 * Fix duplicate flash message on mobile profile edit [#7107](https://github.com/diaspora/diaspora/pull/7107)
 * Clicking photos on mobile should no longer cause 404s [#7071](https://github.com/diaspora/diaspora/pull/7071)
+* Fix avatar size on mobile privacy page for ignored people [#7148](https://github.com/diaspora/diaspora/pull/7148)
+* Don't display tag following button when logged out [#7155](https://github.com/diaspora/diaspora/pull/7155)
+* Fix message modal on profile page [#7137](https://github.com/diaspora/diaspora/pull/7137)
+* Display error message when aspect membership changes fail [#7132](https://github.com/diaspora/diaspora/pull/7132)
+* Avoid the creation of pod that are none [#7145](https://github.com/diaspora/diaspora/pull/7145)
+* Fixed tag pages with alternate default aspect settings [#7262](https://github.com/diaspora/diaspora/pull/7162)
+* Suppressed CSP related deprecation warnings [#7263](https://github.com/diaspora/diaspora/pull/7163)
 
 ## Features
 * Deleted comments will be removed when loading more comments [#7045](https://github.com/diaspora/diaspora/pull/7045)
@@ -40,6 +63,13 @@
 * You'll now get redirected to the invites page if you follow an invitation but you're already logged in [#7061](https://github.com/diaspora/diaspora/pull/7061)
 * Add support for setting BOSH access protocol via chat configuration [#7100](https://github.com/diaspora/diaspora/pull/7100)
 * Add number of unreviewed reports to admin dashboard and admin sidebar [#7109](https://github.com/diaspora/diaspora/pull/7109)
+* Don't federate to pods that have been offline for an extended period of time [#7120](https://github.com/diaspora/diaspora/pull/7120)
+* Add In-Reply-To and References headers to notification mails [#7122](https://github.com/diaspora/diaspora/pull/7122)
+* Directly link to a comment in commented notification mails [#7124](https://github.com/diaspora/diaspora/pull/7124)
+* Add optional `Content-Security-Policy` header [#7128](https://github.com/diaspora/diaspora/pull/7128)
+* Add links to main stream and public stream to the mobile drawer [#7144](https://github.com/diaspora/diaspora/pull/7144)
+* Allow opening search results from the dropdown in a new tab [#7021](https://github.com/diaspora/diaspora/issues/7021)
+* Add user setting for default post visibility [#7118](https://github.com/diaspora/diaspora/issues/7118)
 
 # 0.6.0.1
 
