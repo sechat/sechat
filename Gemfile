@@ -104,6 +104,7 @@ source "https://rails-assets.org" do
   gem "rails-assets-markdown-it-sup",                     "1.0.0"
   gem "rails-assets-highlightjs",                         "9.7.0"
   gem "rails-assets-bootstrap-markdown",                  "2.10.0"
+  gem "rails-assets-corejs-typeahead",                    "1.0.1"
 
   # jQuery plugins
 
@@ -134,6 +135,10 @@ gem "redcarpet",         "3.3.4"
 gem "twitter-text",      "1.14.0"
 gem "ruby-oembed",       "0.10.1"
 gem "open_graph_reader", "0.6.1"
+
+# RTL support
+
+gem "string-direction", "1.2.0"
 
 # Security Headers
 

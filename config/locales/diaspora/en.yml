@@ -240,6 +240,8 @@ en:
     explanation: "Post to diaspora* from anywhere by bookmarking this link => %{link}."
 
   comments:
+    create:
+      error: "Failed to comment."
     new_comment:
       comment: "Comment"
       commenting: "Commenting..."
@@ -591,6 +593,10 @@ en:
       source_package: "Download the source code package"
       be_excellent: "Be excellent to each other! ♥"
 
+  likes:
+    create:
+      error: "Failed to like."
+
   notifications:
     started_sharing:
       zero: "%{actors} started sharing with you."
@@ -892,8 +898,6 @@ en:
       invited_by: "You were invited by"
 
   photos:
-    show:
-      show_original_post: "Show original post"
     create:
       runtime_error: "Photo upload failed.  Are you sure that your seatbelt is fastened?"
       integrity_error: "Photo upload failed.  Are you sure that was an image?"
@@ -991,6 +995,8 @@ en:
     invalid_invite: "The invite link you provided is no longer valid!"
 
   reshares:
+    create:
+      error: "Failed to reshare."
     reshare:
       reshared_via: "Reshared via"
       reshare_confirmation: "Reshare %{author}’s post?"

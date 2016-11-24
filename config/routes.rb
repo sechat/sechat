@@ -38,7 +38,7 @@ Diaspora::Application.routes.draw do
     resources :poll_participations, only: :create
     resources :likes, only: %i(create destroy index)
     resources :comments, only: %i(new create destroy index)
-    resource :bookmarks, only: %i(create destroy)
+    resources :reshares, only: :index
   end
 
   get 'p/:id' => 'posts#show', :as => 'short_post'
@@ -103,7 +103,6 @@ Diaspora::Application.routes.draw do
 
   resource :user, only: %i(edit destroy), shallow: true do
     put :edit, action: :update
-    get :getting_started_completed
     post :export_profile
     get :download_profile
     post :export_photos
