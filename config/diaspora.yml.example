@@ -249,7 +249,7 @@ configuration: ## Section
         ## Configure the protocol used to access the BOSH endpoint
         #proto: http
 
-        ## Configure the address that vines should listen on.
+        ## Configure the address that prosody should listen on.
         #address: '0.0.0.0'
 
         ## Configure the BOSH port.
@@ -429,6 +429,10 @@ configuration: ## Section
       #paypal_hosted_button_id: "change_me"
       ## OR encrypted key of unhosted button
       #paypal_unhosted_button_encrypted: "-----BEGIN PKCS7-----"
+
+    ## Liberapay.com is a free platform which allow donations like patreon
+    ## Set your username to include your liberapay button
+    # liberapay_username: "change_me"
 
     ## Bitcoin donations
     ## You can provide a bitcoin address here to allow your users to provide
