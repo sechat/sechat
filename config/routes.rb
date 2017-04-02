@@ -111,6 +111,10 @@ Diaspora::Application.routes.draw do
     post :auth_token
   end
 
+  controller :tags do
+    get "public_tag/:name" => :public, :as => :tags_public
+  end
+
   controller :users do
     get "public/:username"          => :public,                  :as => :users_public
     get "getting_started"           => :getting_started,         :as => :getting_started

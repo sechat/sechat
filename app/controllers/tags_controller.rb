@@ -48,6 +48,20 @@ class TagsController < ApplicationController
     end
   end
 
+  def public
+    if stream = Stream::Tag.new(nil, params[:name])
+      respond_to do |format|
+        format.atom do
+          @stream = stream
+        end
+
+        format.any { redirect_to stream_path }
+      end
+    else
+      redirect_to stream_path
+    end
+  end
+
   private
 
   def tag_followed?
