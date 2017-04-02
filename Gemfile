@@ -86,13 +86,13 @@ gem "entypo-rails", "3.0.0"
 # JavaScript
 
 gem "handlebars_assets", "0.23.1"
-gem "jquery-rails",      "4.2.1"
+gem "jquery-rails",      "4.2.2"
 gem "jquery-ui-rails",   "5.0.5"
 gem "js-routes",         "1.3.3"
 gem "js_image_paths",    "0.1.0"
 
 source "https://rails-assets.org" do
-  gem "rails-assets-jquery",                              "2.2.4" # Should be kept in sync with jquery-rails
+  gem "rails-assets-jquery",                              "3.1.1" # Should be kept in sync with jquery-rails
 
   gem "rails-assets-highlightjs",                         "9.9.0"
   gem "rails-assets-markdown-it",                         "8.3.0"
@@ -132,7 +132,7 @@ gem "leaflet-rails",       "0.7.7"
 
 # Parsing
 
-gem "nokogiri",          "1.7.0.1"
+gem "nokogiri",          "1.7.1"
 gem "open_graph_reader", "0.6.2" # also update User-Agent in features/support/webmock.rb
 gem "redcarpet",         "3.4.0"
 gem "ruby-oembed",       "0.10.1"

@@ -51,15 +51,9 @@ describe NodeInfoController do
   end
 
   describe "#statistics" do
-    it "responds to format json" do
+    it "returns a 406 for json format" do
       get :statistics, format: "json"
-      expect(response.code).to eq("200")
-    end
-
-    it "contains json" do
-      get :statistics, format: "json"
-      json = JSON.parse(response.body)
-      expect(json["name"]).to be_present
+      expect(response.code).to eq("406")
     end
 
     it "responds to html" do
