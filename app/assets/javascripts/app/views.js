@@ -58,8 +58,7 @@ app.views.Base = Backbone.View.extend({
       .html(this.template(presenter))
       .attr("data-template", _.last(this.templateName.split("/")));
 
-    // add avatar fallback if it can't be loaded
-    this.$el.find(this.avatars.selector).on("error", this.avatars.fallback);
+    this.setupAvatarFallback(this.$el);
 
     // add placeholder support for old browsers
     this.$("input, textarea").placeholder();
@@ -177,6 +176,10 @@ app.views.Base = Backbone.View.extend({
       $(this).attr("src", ImagePaths.get("user/default.png"));
     },
     selector: "img.avatar"
+  },
+
+  setupAvatarFallback: function(el) {
+    el.find(this.avatars.selector).on("error", this.avatars.fallback);
   }
 });
 
