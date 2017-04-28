@@ -51,6 +51,7 @@ defaults:
     sidekiq_workers: 1
   chat:
     enabled: false
+    frontend: "jsxc"
     server:
       enabled: true
       certs: "config/certs"

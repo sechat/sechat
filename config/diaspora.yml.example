@@ -219,6 +219,12 @@ configuration: ## Section
     ## https://wiki.diasporafoundation.org/Integration/Chat#Installation.2FUpdate
     #enabled: true
 
+    ## Use a different chat front-end (default=jsxc)
+    ##
+    ## You can switch between jsxc (https://www.jsxc.org)
+    ## and converse (https://conversejs.org)
+    #frontend: "converse"
+
     ## Custom XMPP server configuration goes here.
     server: ## Section
 
