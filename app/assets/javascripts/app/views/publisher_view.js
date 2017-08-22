@@ -352,7 +352,7 @@ app.views.Publisher = Backbone.View.extend({
   },
 
   keyDown : function(evt) {
-    if(evt.which === Keycodes.ENTER && evt.ctrlKey) {
+    if (evt.which === Keycodes.ENTER && (evt.metaKey || evt.ctrlKey)) {
       this.$("form").submit();
       this.open();
       return false;
@@ -407,8 +407,8 @@ app.views.Publisher = Backbone.View.extend({
   },
 
   tryClose : function(){
-    // if it is not submittable, close it.
-    if( !this._submittable() ){
+    // if it is not submittable and not in preview mode, close it.
+    if (!this._submittable() && !this.markdownEditor.isPreviewMode()) {
       this.close();
     }
   },

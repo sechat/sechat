@@ -9,6 +9,10 @@ describe StatusMessage, type: :model do
   let!(:aspect) { user.aspects.first }
   let(:status) { build(:status_message) }
 
+  it_behaves_like "a shareable" do
+    let(:object) { status }
+  end
+
   describe "scopes" do
     describe ".where_person_is_mentioned" do
       it "returns status messages where the given person is mentioned" do
@@ -189,7 +193,7 @@ describe StatusMessage, type: :model do
 
     it "should queue a GatherOembedData if it includes a link" do
       status_message
-      expect(Workers::GatherOEmbedData).to receive(:perform_async).with(instance_of(Fixnum), instance_of(String))
+      expect(Workers::GatherOEmbedData).to receive(:perform_async).with(kind_of(Integer), instance_of(String))
       status_message.save
     end
 
@@ -210,7 +214,7 @@ describe StatusMessage, type: :model do
 
     it "should queue a GatherOpenGraphData if it includes a link" do
       status_message
-      expect(Workers::GatherOpenGraphData).to receive(:perform_async).with(instance_of(Fixnum), instance_of(String))
+      expect(Workers::GatherOpenGraphData).to receive(:perform_async).with(kind_of(Integer), instance_of(String))
       status_message.save
     end
 

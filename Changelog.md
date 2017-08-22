@@ -1,4 +1,32 @@
+# 0.8.0.0
+
+## Refactor
+
+## Bug fixes
+
+## Features
+
+# 0.7.1.0
+
+## Refactor
+* Remove title from profile photo upload button [#7551](https://github.com/diaspora/diaspora/pull/7551)
+
+## Bug fixes
+
+## Features
+* Ask for confirmation when leaving a submittable comment field [#7530](https://github.com/diaspora/diaspora/pull/7530)
+
 # 0.7.0.0
+
+## Supported Ruby versions
+
+This release recommends using Ruby 2.4, while retaining Ruby 2.3 as an officially supported version.
+Ruby 2.1 is no longer officially supported.
+
+## Delete public/.well-known/
+
+Before upgrading, please check if your `public/` folder contains a hidden `.well-known/` folder.
+If so, please delete it since it will prevent the federation from working properly.
 
 ## Refactor
 
@@ -11,24 +39,42 @@
 * Remove deprecated statistics.json [#7399](https://github.com/diaspora/diaspora/pull/7399)
 * Always link comment count text on mobile [#7483](https://github.com/diaspora/diaspora/pull/7483)
 * Switch to new federation protocol [#7436](https://github.com/diaspora/diaspora/pull/7436)
+* Send public profiles publicly [#7501](https://github.com/diaspora/diaspora/pull/7501)
+* Change sender for mails [#7495](https://github.com/diaspora/diaspora/pull/7495)
+* Move back to top to the right to avoid misclicks [#7516](https://github.com/diaspora/diaspora/pull/7516)
+* Include count in mobile post action link [#7520](https://github.com/diaspora/diaspora/pull/7520)
+* Update the user data export archive format [#6726](https://github.com/diaspora/diaspora/pull/6726)
+* Use id as fallback when sorting posts [#7523](https://github.com/diaspora/diaspora/pull/7523)
+* Remove no-posts-info when adding posts to the stream [#7523](https://github.com/diaspora/diaspora/pull/7523)
+* Upgrade to rails 5.1 [#7514](https://github.com/diaspora/diaspora/pull/7514)
+* Refactoring single post view interactions [#7182](https://github.com/diaspora/diaspora/pull/7182)
+* Update help pages [#7528](https://github.com/diaspora/diaspora/pull/7528)
+* Disable rendering logging in production [#7529](https://github.com/diaspora/diaspora/pull/7529)
+* Add some missing indexes and cleanup the database if needed [#7533](https://github.com/diaspora/diaspora/pull/7533)
+* Remove avatar, name, timestamp and interactions from publisher preview [#7536](https://github.com/diaspora/diaspora/pull/7536)
 
 ## Bug fixes
 
 * Fix height too high on mobile SPV [#7480](https://github.com/diaspora/diaspora/pull/7480)
+* Improve stream when ignoring a person who posts a lot of tagged posts [#7503](https://github.com/diaspora/diaspora/pull/7503)
+* Fix order of comments across pods [#7436](https://github.com/diaspora/diaspora/pull/7436)
+* Prevent publisher from closing in preview mode [#7518](https://github.com/diaspora/diaspora/pull/7518)
+* Increase reshare counter after reshare on mobile [#7520](https://github.com/diaspora/diaspora/pull/7520)
+* Reset stuck exports and handle errors [#7535](https://github.com/diaspora/diaspora/pull/7535)
 
 ## Features
 * Add support for mentions in comments to the backend [#6818](https://github.com/diaspora/diaspora/pull/6818)
 * Add support for new mention syntax [#7300](https://github.com/diaspora/diaspora/pull/7300) [#7394](https://github.com/diaspora/diaspora/pull/7394)
 * Render mentions as links in comments [#7327](https://github.com/diaspora/diaspora/pull/7327)
 * Add support for mentions in comments to the front-end [#7386](https://github.com/diaspora/diaspora/pull/7386)
-
-# 0.6.8.0
-
-## Refactor
-
-## Bug fixes
-
-## Features
+* Support direct links to comments on mobile [#7508](https://github.com/diaspora/diaspora/pull/7508)
+* Add inviter first and last name in the invitation e-mail [#7484](https://github.com/diaspora/diaspora/pull/7484)
+* Add markdown editor for comments and conversations [#7482](https://github.com/diaspora/diaspora/pull/7482)
+* Improve responsive header in desktop version [#7509](https://github.com/diaspora/diaspora/pull/7509)
+* Support cmd+enter to submit posts, comments and conversations [#7524](https://github.com/diaspora/diaspora/pull/7524)
+* Add markdown editor for posts, comments and conversations on mobile [#7235](https://github.com/diaspora/diaspora/pull/7235)
+* Mark as "Mobile Web App Capable" on Android [#7534](https://github.com/diaspora/diaspora/pull/7534)
+* Add support for receiving account migrations [#6750](https://github.com/diaspora/diaspora/pull/6750)
 
 # 0.6.7.0
 

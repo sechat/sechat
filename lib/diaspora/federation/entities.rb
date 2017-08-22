@@ -2,7 +2,7 @@ module Diaspora
   module Federation
     module Entities
       def self.build(entity)
-        public_send(Mappings.builder_for(entity.class), entity)
+        public_send(Mappings.builder_for(entity), entity)
       end
 
       def self.post(post)
@@ -19,6 +19,13 @@ module Diaspora
       def self.account_deletion(account_deletion)
         DiasporaFederation::Entities::AccountDeletion.new(
           author: account_deletion.diaspora_handle
+        )
+      end
+
+      def self.account_migration(account_migration)
+        DiasporaFederation::Entities::AccountMigration.new(
+          author:  account_migration.sender.diaspora_handle,
+          profile: profile(account_migration.new_person.profile)
         )
       end
 
@@ -160,7 +167,8 @@ module Diaspora
           location:         profile.location,
           searchable:       profile.searchable,
           nsfw:             profile.nsfw,
-          tag_string:       profile.tag_string
+          tag_string:       profile.tag_string,
+          public:           profile.public_details
         )
       end
 

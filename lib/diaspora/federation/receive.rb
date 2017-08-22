@@ -4,11 +4,19 @@ module Diaspora
       extend Diaspora::Logging
 
       def self.perform(entity)
-        public_send(Mappings.receiver_for(entity.class), entity)
+        public_send(Mappings.receiver_for(entity), entity)
       end
 
       def self.account_deletion(entity)
-        AccountDeletion.create!(person: author_of(entity), diaspora_handle: entity.author)
+        AccountDeletion.create!(person: author_of(entity))
+      end
+
+      def self.account_migration(entity)
+        profile = profile(entity.profile)
+        AccountMigration.create!(
+          old_person: Person.by_account_identifier(entity.author),
+          new_person: profile.person
+        )
       end
 
       def self.comment(entity)
@@ -122,7 +130,8 @@ module Diaspora
             location:         entity.location,
             searchable:       entity.searchable,
             nsfw:             entity.nsfw,
-            tag_string:       entity.tag_string
+            tag_string:       entity.tag_string,
+            public_details:   entity.public
           )
         end
       end
@@ -211,7 +220,8 @@ module Diaspora
           poll.poll_answers = entity.poll_answers.map do |answer|
             PollAnswer.new(
               guid:   answer.guid,
-              answer: answer.answer
+              answer: answer.answer,
+              poll:   poll
             )
           end
         end

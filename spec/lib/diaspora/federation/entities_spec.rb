@@ -8,6 +8,16 @@ describe Diaspora::Federation::Entities do
       expect(federation_entity.author).to eq(diaspora_entity.person.diaspora_handle)
     end
 
+    it "builds an account migration" do
+      diaspora_entity = FactoryGirl.build(:account_migration)
+      diaspora_entity.old_private_key = OpenSSL::PKey::RSA.generate(1024).export
+      federation_entity = described_class.build(diaspora_entity)
+
+      expect(federation_entity).to be_instance_of(DiasporaFederation::Entities::AccountMigration)
+      expect(federation_entity.author).to eq(diaspora_entity.old_person.diaspora_handle)
+      expect(federation_entity.profile.author).to eq(diaspora_entity.new_person.diaspora_handle)
+    end
+
     it "builds a comment" do
       diaspora_entity = FactoryGirl.build(:comment)
       federation_entity = described_class.build(diaspora_entity)
@@ -188,6 +198,7 @@ describe Diaspora::Federation::Entities do
       expect(federation_entity.searchable).to eq(diaspora_entity.searchable)
       expect(federation_entity.nsfw).to eq(diaspora_entity.nsfw)
       expect(federation_entity.tag_string.split(" ")).to match_array(diaspora_entity.tag_string.split(" "))
+      expect(federation_entity.public).to eq(diaspora_entity.public_details)
     end
 
     it "builds a reshare" do

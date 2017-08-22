@@ -8,9 +8,21 @@ describe Diaspora::Federation::Receive do
     it "saves the account deletion" do
       Diaspora::Federation::Receive.account_deletion(account_deletion_entity)
 
-      account_deletion = AccountDeletion.find_by!(diaspora_handle: sender.diaspora_handle)
+      expect(AccountDeletion.exists?(person: sender)).to be_truthy
+    end
+  end
 
-      expect(account_deletion.person).to eq(sender)
+  describe ".account_migration" do
+    let(:new_person) { FactoryGirl.create(:person) }
+    let(:profile_entity) { Fabricate(:profile_entity, author: new_person.diaspora_handle) }
+    let(:account_migration_entity) {
+      Fabricate(:account_migration_entity, author: sender.diaspora_handle, profile: profile_entity)
+    }
+
+    it "saves the account deletion" do
+      Diaspora::Federation::Receive.account_migration(account_migration_entity)
+
+      expect(AccountMigration.exists?(old_person: sender, new_person: new_person)).to be_truthy
     end
   end
 
@@ -415,6 +427,7 @@ describe Diaspora::Federation::Receive do
       expect(profile.searchable).to eq(profile_entity.searchable)
       expect(profile.nsfw).to eq(profile_entity.nsfw)
       expect(profile.tag_string.split(" ")).to match_array(profile_entity.tag_string.split(" "))
+      expect(profile.public_details).to eq(profile_entity.public)
     end
   end
 
