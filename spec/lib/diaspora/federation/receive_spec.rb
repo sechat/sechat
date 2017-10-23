@@ -12,6 +12,27 @@ describe Diaspora::Federation::Receive do
 
       expect(AccountDeletion.exists?(person: sender)).to be_truthy
     end
+
+    it "ignores duplicate the account deletion" do
+      AccountDeletion.create(person: sender)
+
+      expect(AccountDeletion).not_to receive(:create!)
+
+      Diaspora::Federation::Receive.account_deletion(account_deletion_entity)
+
+      expect(AccountDeletion.exists?(person: sender)).to be_truthy
+    end
+
+    it "handles race conditions on parallel receive" do
+      expect(AccountDeletion).to receive(:create!) do
+        AccountDeletion.create(person: sender)
+        raise "Some database error"
+      end
+
+      Diaspora::Federation::Receive.account_deletion(account_deletion_entity)
+
+      expect(AccountDeletion.exists?(person: sender)).to be_truthy
+    end
   end
 
   describe ".account_migration" do
@@ -23,6 +44,27 @@ describe Diaspora::Federation::Receive do
 
     it "saves the account deletion" do
       Diaspora::Federation::Receive.account_migration(account_migration_entity)
+
+      expect(AccountMigration.exists?(old_person: sender, new_person: new_person)).to be_truthy
+    end
+
+    it "ignores duplicate the account migrations" do
+      AccountMigration.create(old_person: sender, new_person: new_person)
+
+      expect(AccountMigration).not_to receive(:create!)
+
+      expect(Diaspora::Federation::Receive.account_migration(account_migration_entity)).to be_nil
+
+      expect(AccountMigration.exists?(old_person: sender, new_person: new_person)).to be_truthy
+    end
+
+    it "handles race conditions on parallel receive" do
+      expect(AccountMigration).to receive(:create!) do
+        AccountMigration.create(old_person: sender, new_person: new_person)
+        raise "Some database error"
+      end
+
+      expect(Diaspora::Federation::Receive.account_migration(account_migration_entity)).to be_nil
 
       expect(AccountMigration.exists?(old_person: sender, new_person: new_person)).to be_truthy
     end
@@ -74,7 +116,7 @@ describe Diaspora::Federation::Receive do
 
     let(:entity) { comment_entity }
     it_behaves_like "it ignores existing object received twice", Comment
-    it_behaves_like "it rejects if the parent author ignores the author", Comment
+    it_behaves_like "it rejects if the root author ignores the author", Comment
     it_behaves_like "it relays relayables", Comment
   end
 
@@ -241,8 +283,49 @@ describe Diaspora::Federation::Receive do
 
     let(:entity) { like_entity }
     it_behaves_like "it ignores existing object received twice", Like
-    it_behaves_like "it rejects if the parent author ignores the author", Like
+    it_behaves_like "it rejects if the root author ignores the author", Like
     it_behaves_like "it relays relayables", Like
+
+    context "like for a comment" do
+      let(:comment) { FactoryGirl.create(:comment, post: post) }
+      let(:like_entity) {
+        build_relayable_federation_entity(
+          :like,
+          {
+            author:           sender.diaspora_handle,
+            parent_guid:      comment.guid,
+            parent_type:      "Comment",
+            author_signature: "aa"
+          },
+          "new_property" => "data"
+        )
+      }
+
+      it "attaches the like to the comment" do
+        Diaspora::Federation::Receive.perform(like_entity)
+
+        like = Like.find_by!(guid: like_entity.guid)
+
+        expect(comment.likes).to include(like)
+        expect(like.target).to eq(comment)
+      end
+
+      it "saves the signature data" do
+        Diaspora::Federation::Receive.perform(like_entity)
+
+        like = Like.find_by!(guid: like_entity.guid)
+
+        expect(like.signature).not_to be_nil
+        expect(like.signature.author_signature).to eq("aa")
+        expect(like.signature.additional_data).to eq("new_property" => "data")
+        expect(like.signature.order).to eq(like_entity.signature_order.map(&:to_s))
+      end
+
+      let(:entity) { like_entity }
+      it_behaves_like "it ignores existing object received twice", Like
+      it_behaves_like "it rejects if the root author ignores the author", Like
+      it_behaves_like "it relays relayables", Like
+    end
   end
 
   describe ".message" do
@@ -408,7 +491,7 @@ describe Diaspora::Federation::Receive do
 
     let(:entity) { poll_participation_entity }
     it_behaves_like "it ignores existing object received twice", PollParticipation
-    it_behaves_like "it rejects if the parent author ignores the author", PollParticipation
+    it_behaves_like "it rejects if the root author ignores the author", PollParticipation
     it_behaves_like "it relays relayables", PollParticipation
   end
 
@@ -583,17 +666,6 @@ describe Diaspora::Federation::Receive do
         expect_any_instance_of(StatusMessage).not_to receive(:create_or_update)
 
         Diaspora::Federation::Receive.perform(status_message_entity)
-      end
-
-      it "finds the correct author if the author is not lowercase" do
-        status_message_entity = Fabricate(:status_message_entity, author: sender.diaspora_handle.upcase)
-
-        received = Diaspora::Federation::Receive.perform(status_message_entity)
-
-        status_message = StatusMessage.find_by!(guid: status_message_entity.guid)
-
-        expect(received).to eq(status_message)
-        expect(status_message.author).to eq(sender)
       end
     end
 
