@@ -11,8 +11,13 @@
 ## Refactor
 
 ## Bug fixes
+* Ignore invalid `diaspora://` links [#7652](https://github.com/diaspora/diaspora/pull/7652)
 
 ## Features
+
+# 0.7.1.1
+
+Fixes an issue with installing and running diaspora\* with today released bundler v1.16.0.
 
 # 0.7.1.0
 
