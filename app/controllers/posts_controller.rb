@@ -19,14 +19,14 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = post_service.find!(params[:id])
-    post_service.mark_user_notifications(@post.id)
-    presenter = PostPresenter.new(@post, current_user)
+    post = post_service.find!(params[:id])
+    post_service.mark_user_notifications(post.id)
+    presenter = PostPresenter.new(post, current_user)
     respond_to do |format|
-      format.html {
+      format.html do
         gon.post = presenter.with_initial_interactions
         render locals: {post: presenter}
-      }
+      end
       format.mobile { render locals: {post: post} }
       format.json { render json: presenter.with_interactions }
     end
