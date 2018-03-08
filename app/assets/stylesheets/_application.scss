@@ -42,6 +42,7 @@
 
 // profile and settings pages
 @import 'settings';
+@import 'cropperjs/dist/cropper';
 
 // new SPV
 @import 'header';
@@ -86,6 +87,7 @@
 @import 'comments';
 @import 'markdown-content';
 @import 'oembed';
+@import 'media-embed';
 @import 'post-content';
 
 // chat
