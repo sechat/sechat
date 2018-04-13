@@ -60,7 +60,6 @@ Rails.application.routes.draw do
   get "bookmarked" => "streams#bookmarked", :as => "bookmarked_stream"
 
   resources :aspects, except: %i(index new edit) do
-    put :toggle_contact_visibility
     put :toggle_chat_privilege
     collection do
       put "order" => :update_order
@@ -170,7 +169,6 @@ Rails.application.routes.draw do
   resources :people, only: %i(show index) do
     resources :status_messages, only: %i(new create)
     resources :photos, except:  %i(new update)
-    get :contacts
     get :stream
     get :hovercard
 
