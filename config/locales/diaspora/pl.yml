@@ -627,7 +627,6 @@ pl:
       public_feed: "Publiczny kanał diaspory* użytkownika %{name}"
       source_package: "Pobierz archiwum z kodem źródłowym"
       statistics_link: "Statystyki poda"
-      toggle: "Przełącz widok mobilny"
       whats_new: "Co nowego?"
     header:
       code: "Kod"
@@ -1067,7 +1066,6 @@ pl:
       share_to: "Udostępnij w serwisie %{provider}"
       title: "Zarządzaj połączonymi usługami"
     provider:
-      facebook: "Facebook"
       tumblr: "Tumblr"
       twitter: "Twitter"
       wordpress: "WordPress"
@@ -1241,6 +1239,10 @@ pl:
       mentioned_in_comment: "ktoś wspomni o mnie w komentarzu"
       new_password: "Nowe hasło"
       private_message: "otrzymam prywatną wiadomość"
+      protocol_handler:
+        description: "Po wciśnięciu tego przycisku, przeglądarka poprosi cię o zezwolenie nam na otwieranie adresów rozpoczynających się od web+diaspora:// za pomocą twojego podu. Jest to funkcja eksperymentalna i jej obsługa zależy od twojej przeglądarki."
+        register: "Zarejestruj"
+        title: "Handler protokołu web+diaspora://"
       receive_email_notifications: "Wysyłaj powiadomienia e-mail gdy:"
       request_export: "Proszę o dane mojego profilu"
       request_export_photos: "Proszę o moje zdjęcia"
@@ -1258,8 +1260,6 @@ pl:
     getting_started:
       awesome_take_me_to_diaspora: "Świetnie! Zabierz mnie na diasporę*"
       community_welcome: "Społeczność diaspory* cieszy się, że ​​jesteś z nami!"
-      connect_to_facebook: "Możemy nieco przyśpieszyć poprzez %{link} do diaspory*. To spowoduje pobranie Twojej nazwy, zdjęcia i włączy równoczesne publikowanie wpisów w obu serwisach."
-      connect_to_facebook_link: "Podpięcie konta na Facebooku"
       hashtag_explanation: "Tagi pozwalają łatwo odnaleźć interesujące Cię tematy. Są także świetnym sposobem na nawiązywanie znajomości na diasporze*."
       hashtag_suggestions: "Spróbuj obserwować tagi takie jak #sztuka, #filmy, #gif, itd."
       well_hello_there: "No, witam!"

@@ -19,7 +19,7 @@ module AspectCukeHelpers
   def toggle_aspect_via_ui(aspect_name)
     aspects_dropdown = find(".aspect-membership-dropdown .dropdown-toggle", match: :first)
     aspects_dropdown.trigger "click"
-    selected_aspect_count = all(".aspect-membership-dropdown.open .dropdown-menu li.selected").length
+    selected_aspect_count = all(".aspect-membership-dropdown.open .dropdown-menu li.selected", wait: false).length
     aspect = find(".aspect-membership-dropdown.open .dropdown-menu li", text: aspect_name)
     aspect_selected = aspect["class"].include? "selected"
     aspect.trigger "click"
@@ -38,6 +38,26 @@ module AspectCukeHelpers
 end
 World(AspectCukeHelpers)
 
+Given /^I have an aspect called "([^\"]*)"$/ do |aspect_name|
+  @me.aspects.create!(name: aspect_name)
+  @me.reload
+end
+
+Given /^I have an aspect called "([^\"]*)" with auto follow back$/ do |aspect_name|
+  aspect = @me.aspects.create!(name: aspect_name)
+  @me.auto_follow_back = true
+  @me.auto_follow_back_aspect = aspect
+  @me.save
+  @me.reload
+end
+
+Given /^I have following aspect[s]?:$/ do |fields|
+  fields.raw.each do |field|
+    @me.aspects.create!(name: field[0])
+  end
+  @me.reload
+end
+
 When /^I click on "([^"]*)" aspect edit icon$/ do |aspect_name|
   within(".all-aspects") do
     li = find('li', text: aspect_name)
@@ -50,7 +70,7 @@ When /^I select only "([^"]*)" aspect$/ do |aspect_name|
   click_link "My aspects"
   expect(find("#aspect-stream-container")).to have_css(".loader.hidden", visible: false)
   within("#aspects_list") do
-    all(".selected").each do |node|
+    all(".selected", wait: false).each do |node|
       aspect_item = node.find(:xpath, "..")
       aspect_item.click
       expect(aspect_item).to have_no_css ".selected"
@@ -76,14 +96,14 @@ end
 When /^I add the first person to the aspect$/ do
   find(".contact_add-to-aspect", match: :first).tap do |button|
     button.click
-    button.parent.should have_css ".contact_remove-from-aspect"
+    button.query_scope.should have_css ".contact_remove-from-aspect"
   end
 end
 
 When /^I remove the first person from the aspect$/ do
   find(".contact_remove-from-aspect", match: :first).tap do |button|
     button.click
-    button.parent.should have_css ".contact_add-to-aspect"
+    button.query_scope.should have_css ".contact_add-to-aspect"
     sleep 1 # The expectation above should wait for the request to finsh, but that doesn't work for some reason
   end
 end
@@ -110,6 +130,10 @@ end
 
 And /^I toggle the aspect "([^"]*)"$/ do |name|
   toggle_aspect(name)
+end
+
+Then /^I should see "([^"]*)" within the contact aspect dropdown$/ do |aspect_name|
+  expect(find(".dropdown-toggle .text")).to have_content aspect_name
 end
 
 Then /^I should see "([^"]*)" aspect selected$/ do |aspect_name|

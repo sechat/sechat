@@ -619,7 +619,6 @@ zh-TW:
       public_feed: "%{name} 在 diaspora* 的公開資訊源"
       source_package: "下載源碼封裝檔"
       statistics_link: "豆莢統計資料"
-      toggle: "切換行動版頁面"
       whats_new: "更新了什麼？"
     header:
       code: "源碼"
@@ -995,7 +994,6 @@ zh-TW:
       share_to: "分享到%{provider}"
       title: "管理連結中的外部服務"
     provider:
-      facebook: "Facebook"
       tumblr: "Tumblr"
       twitter: "Twitter"
       wordpress: "WordPress"
@@ -1163,6 +1161,10 @@ zh-TW:
       mentioned_in_comment: "你在一則貼文的留言中被提到了"
       new_password: "新的密碼"
       private_message: "收到私人訊息"
+      protocol_handler:
+        description: "按下這個按鈕會要求你的瀏覽器把我們註冊為 web+diaspora:// 鏈結的處理者，未來就會在你註冊的豆莢開啟這種鏈結。這個功能目前還在實驗階段，效果如何取決於瀏覽器如何支援。"
+        register: "註冊"
+        title: "web+diaspora:// 鏈結的通訊協定處理者"
       receive_email_notifications: "接收電子郵件通知的時機："
       request_export: "申請下載個人檔案資料"
       request_export_photos: "要求下載相片"
@@ -1180,8 +1182,6 @@ zh-TW:
     getting_started:
       awesome_take_me_to_diaspora: "帥！帶我去 diaspora* 吧"
       community_welcome: "diaspora* 社群歡迎你的加入！"
-      connect_to_facebook: "diaspora* 可以%{link} ，取用你在 Facebook 的姓名和個人照來幫你快速完成設定 ，同時開啟跨站貼文。"
-      connect_to_facebook_link: "連結 Facebook 帳號"
       hashtag_explanation: "標籤讓你可以討論及追蹤你有興趣的話題。也是在 diaspora* 找到新朋友的好方法。"
       hashtag_suggestions: "試試看追蹤像是 #藝術,  #電影, #gif 等標籤。"
       well_hello_there: "嗨，你好！"
